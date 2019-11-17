@@ -1,6 +1,5 @@
 
-CFLAGS=-Wall -ggdb  -O0 -std=c++11 -g
-
+CFLAGS=-Wall -ggdb  -O0 -std=c++11 -g -fprofile-arcs -ftest-coverage -fPIC
 GAME_SOURCES=src/*.cpp test/*.cpp
 
 GCC=g++
@@ -16,6 +15,10 @@ game: $(GAME_SOURCES) Makefile src/*.h
 
 gameTest: game
 	@valgrind ./game
+
+coverage:gameTest
+	gcovr -r . -e test
+	rm -f *.gcov *.gcda *.gcno
 
 clean:
 	@rm -rf $(TARGETS) 
