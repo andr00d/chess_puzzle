@@ -17,7 +17,7 @@ class pawn
 
 		void setPosition(int x, int y);
 		int getXPos(){return XPos;}
-		int getYPos(){return -1;}
+		int getYPos(){return yPos;}
 		
 		bool hasOrb(){return false;}
 		void toggleOrb();

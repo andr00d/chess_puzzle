@@ -34,7 +34,7 @@ TEST_F(pawnTest, getSetYPosition)
 	ASSERT_EQ(0, P->getYPos());
 
 	P->setPosition(5, 6);
-	ASSERT_EQ(5, P->getYPos());
+	ASSERT_EQ(6, P->getYPos());
 }
 
 int main(int argc, char **argv) {
