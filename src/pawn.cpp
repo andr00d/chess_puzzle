@@ -25,6 +25,10 @@ pawn::~pawn()
 
 void pawn::setPosition(int x, int y)
 {
+	if( x < 0 || y < 0)
+	{
+		throw std::invalid_argument("position cannot be negative");
+	}
 
 	XPos = x;
 	yPos = y;
