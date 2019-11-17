@@ -9,7 +9,8 @@ class pawn
 		void printBoard();
 
 		int XPos;
-		int yPos;
+		int YPos;
+		bool HasOrb;
 
     public:
         pawn();
@@ -17,9 +18,9 @@ class pawn
 
 		void setPosition(int x, int y);
 		int getXPos(){return XPos;}
-		int getYPos(){return yPos;}
+		int getYPos(){return YPos;}
 		
-		bool hasOrb(){return false;}
+		bool hasOrb(){return HasOrb;}
 		void toggleOrb();
 };
 #endif

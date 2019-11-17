@@ -5,7 +5,8 @@
 pawn::pawn()
 {
 	XPos = 0;
-	yPos = 0;
+	YPos = 0;
+	HasOrb = false;
 }
 
 pawn::~pawn()
@@ -31,10 +32,10 @@ void pawn::setPosition(int x, int y)
 	}
 
 	XPos = x;
-	yPos = y;
+	YPos = y;
 }
 
 void pawn::toggleOrb()
 {
-	
+	HasOrb = !HasOrb;
 }
