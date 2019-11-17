@@ -6,7 +6,8 @@
 
 pawn::pawn()
 {
-	
+	XPos = 0;
+	yPos = 0;
 }
 
 pawn::~pawn()
