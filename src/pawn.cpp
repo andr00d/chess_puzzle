@@ -24,3 +24,8 @@ pawn::~pawn()
 ////////////////////
 //public functions//
 ////////////////////
+
+void pawn::setPosition(int x, int y)
+{
+	
+}

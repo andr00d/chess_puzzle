@@ -21,9 +21,12 @@ struct pawnTest : testing::Test
 		}
 };
 
-TEST_F(pawnTest, getXPosition)
+TEST_F(pawnTest, getSetXPosition)
 {
 	ASSERT_EQ(0, P->getXPos());
+
+	P->setPosition(5, 6);
+	ASSERT_EQ(5, P->getXPos());
 }
 
 int main(int argc, char **argv) {
