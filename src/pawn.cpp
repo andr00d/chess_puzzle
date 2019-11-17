@@ -27,5 +27,6 @@ pawn::~pawn()
 
 void pawn::setPosition(int x, int y)
 {
-	
+	XPos = x;
+	yPos = y;
 }
