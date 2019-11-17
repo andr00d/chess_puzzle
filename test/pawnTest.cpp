@@ -37,9 +37,15 @@ TEST_F(pawnTest, getSetYPosition)
 	ASSERT_EQ(6, P->getYPos());
 }
 
-TEST_F(pawnTest, SetNegativePosition)
+TEST_F(pawnTest, setNegativePosition)
 {
 	EXPECT_ANY_THROW(P->setPosition(-1, -5));
+}
+
+TEST_F(pawnTest, toggleHasOrb)
+{
+	P->toggleOrb();
+	ASSERT_EQ(true, P->hasOrb());
 }
 
 int main(int argc, char **argv) {
