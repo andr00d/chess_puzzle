@@ -1,6 +1,4 @@
 #include <stdexcept>
-#include <iostream>
-#include <vector>
 
 #include "pawn.h"
 
@@ -27,6 +25,7 @@ pawn::~pawn()
 
 void pawn::setPosition(int x, int y)
 {
+
 	XPos = x;
 	yPos = y;
 }

@@ -37,6 +37,11 @@ TEST_F(pawnTest, getSetYPosition)
 	ASSERT_EQ(6, P->getYPos());
 }
 
+TEST_F(pawnTest, SetNegativePosition)
+{
+	EXPECT_ANY_THROW(P->setPosition(-1, -5));
+}
+
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
