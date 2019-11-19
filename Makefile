@@ -1,5 +1,5 @@
 
-CFLAGS=-Wall -ggdb  -O0 -std=c++11 -g -fprofile-arcs -ftest-coverage -fPIC
+CFLAGS=-Wall -ggdb  -O0 -std=c++11 -g 
 GAME_SOURCES=src/*.cpp test/*.cpp
 
 GCC=g++
@@ -8,7 +8,7 @@ TEST_LIBS= -lgtest -lgtest_main -lgmock -lpthread
 
 .phony: all clean
 
-all: game gameTest
+all: gameTest
 
 game: $(GAME_SOURCES) Makefile src/*.h
 	@$(GCC) $(CFLAGS) $(GAME_SOURCES) $(TEST_LIBS) -o $@
@@ -16,7 +16,11 @@ game: $(GAME_SOURCES) Makefile src/*.h
 gameTest: game
 	@valgrind ./game
 
-coverage:gameTest
+coverage:$(GAME_SOURCES) Makefile src/*.h
+	@$(GCC) $(CFLAGS) -fprofile-arcs -ftest-coverage -fPIC $(GAME_SOURCES) $(TEST_LIBS) -o $@
+
+showCoverage:coverage
+	@valgrind ./coverage
 	gcovr -r . -e test
 	rm -f *.gcov *.gcda *.gcno
 

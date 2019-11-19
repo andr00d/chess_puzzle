@@ -47,9 +47,3 @@ TEST_F(pawnTest, toggleHasOrb)
 	P->toggleOrb();
 	ASSERT_EQ(true, P->hasOrb());
 }
-
-int main(int argc, char **argv) {
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
-}
-
