@@ -4,9 +4,9 @@
 
 #include "board.h"
 
-board::board(std::vector<pawn> Pawns)
+board::board(std::vector<pawn*> Pawnlist)
 {
-	
+	Pawns = Pawnlist;
 }
 
 board::~board()
@@ -24,9 +24,10 @@ board::~board()
 
 bool board::movePawn(pawn *P, int X, int Y)
 {
-    for (auto item: Pawns)
+    std::cout << Pawns.size() << std::endl;
+    for (auto const& item: Pawns)
     {
-        if (item.getXPos() == X && item.getYPos() == Y)
+        if (item->getXPos() == X && item->getYPos() == Y)
             return false;
     }
     

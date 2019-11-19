@@ -8,10 +8,10 @@
 class board
 {
     private:
-		std::vector<pawn> Pawns;
+		std::vector<pawn*> Pawns;
 
     public:
-        board(std::vector<pawn> Pawns);
+        board(std::vector<pawn*> Pawnlist);
 		virtual ~board();
 
 		bool transferOrb(pawn P1, pawn P2);

@@ -14,6 +14,7 @@ class mPawn : public pawn
 
         MOCK_METHOD0(hasOrb, bool());
         MOCK_METHOD0(toggleOrb, void());
+        
 };
 
 #endif

@@ -12,27 +12,40 @@ struct boardTest : testing::Test
 	protected:
 		board *B;
 		mPawn P;
-		std::vector<pawn> pawns;
+		std::vector<mPawn*> Pawns;
 
 		boardTest()
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				mPawn T;
-				pawns.emplace_back(T);
+				mPawn *T = new mPawn;
+				Pawns.push_back(T);
 			}
-			
-			B = new board(pawns);
+
+			std::vector<pawn*> input(Pawns.begin(), Pawns.end());
+			B = new board(input);
 		}
 
 		~boardTest()
 		{
 			delete B;
+			B = NULL;
+			for (auto item: Pawns)
+			{
+				delete item;
+				item = NULL;
+			}
 		}
 };
 
 TEST_F(boardTest, movePawnNormal)
 {
+    for (auto item: Pawns)
+	{
+		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
+		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
+	}
+
 	EXPECT_CALL(P, setPosition(2, 3)).WillOnce(Return(true));
 
 	EXPECT_EQ(B->movePawn(&P, 2, 3), true);
@@ -40,8 +53,11 @@ TEST_F(boardTest, movePawnNormal)
 
 TEST_F(boardTest, movePawnOnPawn)
 {
-	EXPECT_CALL(P, getXPos()).WillRepeatedly(Return(0));
-	EXPECT_CALL(P, getYPos()).WillRepeatedly(Return(0));
+    for (auto item: Pawns)
+	{
+		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
+		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
+	}
 
 	EXPECT_EQ(B->movePawn(&P, 0, 0), false);
 }
