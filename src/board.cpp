@@ -36,7 +36,9 @@ bool board::movePawn(pawn *P, int X, int Y)
 
 bool board::transferOrb(pawn *P1, pawn *P2)
 {
-    if (P1->getXPos() - P2->getXPos() == 
+    if (P1->getXPos() == P2->getXPos() || 
+        P1->getYPos() == P2->getYPos() ||
+        P1->getXPos() - P2->getXPos() == 
         P1->getYPos() - P2->getYPos())
     {
         P1->toggleOrb();
