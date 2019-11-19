@@ -61,3 +61,14 @@ TEST_F(boardTest, movePawnOnPawn)
 
 	EXPECT_EQ(B->movePawn(&P, 0, 0), false);
 }
+
+TEST_F(boardTest, transferOrbNormal)
+{
+	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(0));
+
+	EXPECT_CALL(*Pawns[1], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*Pawns[1], getYPos()).WillRepeatedly(Return(3));
+	
+	EXPECT_EQ(B->transferOrb(Pawns[0], Pawns[1]), true);
+}

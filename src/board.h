@@ -14,7 +14,7 @@ class board
         board(std::vector<pawn*> Pawnlist);
 		virtual ~board();
 
-		bool transferOrb(pawn P1, pawn P2);
+		bool transferOrb(pawn *P1, pawn *P2);
 		bool movePawn(pawn *P, int X, int Y);
 		int checkWin();
 		

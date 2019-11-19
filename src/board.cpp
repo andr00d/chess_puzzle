@@ -33,3 +33,8 @@ bool board::movePawn(pawn *P, int X, int Y)
     
     return P->setPosition(X, Y);
 }
+
+bool board::transferOrb(pawn *P1, pawn *P2)
+{
+    return false;
+}
