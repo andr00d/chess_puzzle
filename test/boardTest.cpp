@@ -4,6 +4,8 @@
 #include <iostream>
 
 
+using ::testing::Return;
+using ::testing::_;
 
 struct boardTest : testing::Test
 {
@@ -24,7 +26,7 @@ struct boardTest : testing::Test
 
 TEST_F(boardTest, movePawnNormal)
 {
-	EXPECT_CALL(P, setPosition(2, 3));
+	EXPECT_CALL(P, setPosition(2, 3)).WillOnce(Return(true));
 
 	EXPECT_EQ(B->movePawn(&P, 2, 3), true);
 }
