@@ -12,10 +12,17 @@ struct boardTest : testing::Test
 	protected:
 		board *B;
 		mPawn P;
+		std::vector<pawn> pawns;
 
 		boardTest()
 		{
-			B = new board();
+			for (int i = 0; i < 5; i++)
+			{
+				mPawn T;
+				pawns.emplace_back(T);
+			}
+			
+			B = new board(pawns);
 		}
 
 		~boardTest()
@@ -29,4 +36,12 @@ TEST_F(boardTest, movePawnNormal)
 	EXPECT_CALL(P, setPosition(2, 3)).WillOnce(Return(true));
 
 	EXPECT_EQ(B->movePawn(&P, 2, 3), true);
+}
+
+TEST_F(boardTest, movePawnOnPawn)
+{
+	EXPECT_CALL(P, getXPos()).WillOnce(Return(0));
+	EXPECT_CALL(P, getYPos()).WillOnce(Return(0));
+
+	EXPECT_EQ(B->movePawn(&P, 0, 0), false);
 }

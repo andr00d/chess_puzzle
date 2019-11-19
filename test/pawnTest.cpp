@@ -2,7 +2,9 @@
 #include "../src/pawn.h"
 #include <iostream>
 
-
+//
+// pawns should be moving in an L like shape. same as knights in chess.
+//
 
 struct pawnTest : testing::Test
 {

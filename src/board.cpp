@@ -4,7 +4,7 @@
 
 #include "board.h"
 
-board::board()
+board::board(std::vector<pawn> Pawns)
 {
 	
 }
