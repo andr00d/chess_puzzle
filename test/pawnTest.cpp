@@ -39,13 +39,29 @@ TEST_F(pawnTest, getSetYPosition)
 	ASSERT_EQ(6, P->getYPos());
 }
 
-TEST_F(pawnTest, setNegativePosition)
-{
-	ASSERT_EQ(P->setPosition(-1, -5), false);
-}
-
 TEST_F(pawnTest, toggleHasOrb)
 {
 	P->toggleOrb();
 	ASSERT_EQ(true, P->hasOrb());
 }
+
+TEST_F(pawnTest, setNegativePosition)
+{
+	ASSERT_EQ(P->setPosition(-1, -5), false);
+}
+
+TEST_F(pawnTest, moveNoLShape)
+{
+	ASSERT_EQ(P->setPosition(1, 1), false);
+	ASSERT_EQ(P->setPosition(3, 6), false);
+	ASSERT_EQ(P->setPosition(5, 6), false);
+}
+
+TEST_F(pawnTest, moveLShape)
+{
+	P->setPosition(3, 3);
+	ASSERT_EQ(P->setPosition(2, 1), true);
+	ASSERT_EQ(P->setPosition(4, 1), true);
+	ASSERT_EQ(P->setPosition(2, 4), true);
+}
+
