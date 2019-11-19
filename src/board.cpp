@@ -39,6 +39,8 @@ bool board::transferOrb(pawn *P1, pawn *P2)
     if (P1->getXPos() - P2->getXPos() == 
         P1->getYPos() - P2->getYPos())
     {
+        P1->toggleOrb();
+        P2->toggleOrb();
         return true;
     }
 
