@@ -24,5 +24,11 @@ board::~board()
 
 bool board::movePawn(pawn *P, int X, int Y)
 {
+    for (auto item: Pawns)
+    {
+        if (item.getXPos() == X && item.getYPos() == Y)
+            return false;
+    }
+    
     return P->setPosition(X, Y);
 }

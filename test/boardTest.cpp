@@ -40,8 +40,8 @@ TEST_F(boardTest, movePawnNormal)
 
 TEST_F(boardTest, movePawnOnPawn)
 {
-	EXPECT_CALL(P, getXPos()).WillOnce(Return(0));
-	EXPECT_CALL(P, getYPos()).WillOnce(Return(0));
+	EXPECT_CALL(P, getXPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(P, getYPos()).WillRepeatedly(Return(0));
 
 	EXPECT_EQ(B->movePawn(&P, 0, 0), false);
 }
