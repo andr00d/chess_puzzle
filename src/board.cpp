@@ -24,6 +24,5 @@ board::~board()
 
 bool board::movePawn(pawn *P, int X, int Y)
 {
-    P->setPosition(X, Y);
-    return false;
+    return P->setPosition(X, Y);
 }

@@ -13,7 +13,7 @@ class pawn
         pawn();
 		virtual ~pawn();
 
-		virtual void setPosition(int x, int y);
+		virtual bool setPosition(int x, int y);
 		virtual int getXPos(){return XPos;}
 		virtual int getYPos(){return YPos;}
 		

@@ -24,15 +24,16 @@ pawn::~pawn()
 //public functions//
 ////////////////////
 
-void pawn::setPosition(int x, int y)
+bool pawn::setPosition(int x, int y)
 {
 	if( x < 0 || y < 0)
 	{
-		throw std::invalid_argument("position cannot be negative");
+		return false;
 	}
 
 	XPos = x;
 	YPos = y;
+	return true;
 }
 
 void pawn::toggleOrb()
