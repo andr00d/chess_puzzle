@@ -7,7 +7,7 @@
 class mPawn : public pawn
 {
     public:
-        MOCK_METHOD2(setPosition, void(int, int));
+        MOCK_METHOD2(setPosition, void(int x, int y));
 
         MOCK_METHOD0(getXPos, int());
         MOCK_METHOD0(getYPos, int());

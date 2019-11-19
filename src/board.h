@@ -14,7 +14,7 @@ class board
 		virtual ~board();
 
 		bool transferOrb(pawn P1, pawn P2);
-		bool movePawn(pawn P, int X, int Y);
+		bool movePawn(pawn *P, int X, int Y);
 		int checkWin();
 		
 };

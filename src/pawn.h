@@ -5,9 +5,6 @@
 class pawn
 {
     private:
-    	void createBoard();
-		void printBoard();
-
 		int XPos;
 		int YPos;
 		bool HasOrb;
@@ -16,11 +13,11 @@ class pawn
         pawn();
 		virtual ~pawn();
 
-		void setPosition(int x, int y);
-		int getXPos(){return XPos;}
-		int getYPos(){return YPos;}
+		virtual void setPosition(int x, int y);
+		virtual int getXPos(){return XPos;}
+		virtual int getYPos(){return YPos;}
 		
-		bool hasOrb(){return HasOrb;}
-		void toggleOrb();
+		virtual bool hasOrb(){return HasOrb;}
+		virtual void toggleOrb();
 };
 #endif

@@ -26,5 +26,5 @@ TEST_F(boardTest, movePawnNormal)
 {
 	EXPECT_CALL(P, setPosition(2, 3));
 
-	B->movePawn(P, 2, 3);
+	B->movePawn(&P, 2, 3);
 }
