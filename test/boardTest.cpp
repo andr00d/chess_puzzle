@@ -11,111 +11,110 @@ struct boardTest : testing::Test
 {
 	protected:
 		board *B;
-		mPawn P;
-		std::vector<mPawn*> Pawns;
+		std::vector<mPawn*> WhitePawns;
+		std::vector<mPawn*> BlackPawns;
 
 		boardTest()
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				mPawn *T = new mPawn;
-				Pawns.push_back(T);
+				mPawn *black = new mPawn(0, 0);
+				mPawn *white = new mPawn(0, 0);
+				BlackPawns.push_back(black);
+				WhitePawns.push_back(white);
 			}
 
-			std::vector<pawn*> input(Pawns.begin(), Pawns.end());
-			B = new board(input);
+			std::vector<pawn*> WInput(WhitePawns.begin(), WhitePawns.end());
+			std::vector<pawn*> BInput(BlackPawns.begin(), BlackPawns.end());
+			B = new board(WInput, BInput);
 		}
 
 		~boardTest()
 		{
 			delete B;
 			B = NULL;
-			for (auto item: Pawns)
+			for (size_t i = 0; i < BlackPawns.size(); i++)
 			{
-				delete item;
-				item = NULL;
+				delete WhitePawns[i];
+				delete BlackPawns[i];
+				WhitePawns[i] = NULL;
+				BlackPawns[i] = NULL;
+			}
+		}
+
+		void setExpectPos(int X, int Y)
+		{
+			for (auto item: WhitePawns)
+			{
+				EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(X));
+				EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(Y));
+			}
+
+			for (auto item: BlackPawns)
+			{
+				EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(X));
+				EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(Y));
 			}
 		}
 };
 
 TEST_F(boardTest, movePawnNormal)
 {
-    for (auto item: Pawns)
-	{
-		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
-		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
-	}
+	setExpectPos(0, 0);
+	EXPECT_CALL(*WhitePawns[0], setPosition(2, 3)).WillOnce(Return(true));
 
-	EXPECT_CALL(P, setPosition(2, 3)).WillOnce(Return(true));
-
-	EXPECT_EQ(B->movePawn(&P, 2, 3), true);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], 2, 3), true);
 }
 
 TEST_F(boardTest, movePawnOnPawn)
 {
-    for (auto item: Pawns)
-	{
-		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
-		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
-	}
+	setExpectPos(0, 0);
 
-	EXPECT_EQ(B->movePawn(&P, 0, 0), false);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], 0, 0), false);
 }
 
 TEST_F(boardTest, transferOrbDiagonal)
 {
-    for (auto item: Pawns)
-	{
-		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
-		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
-	}
+	setExpectPos(0, 0);
 
-	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(1));
-	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(1));
-	EXPECT_CALL(*Pawns[0], toggleOrb());
+	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(1));
+	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(1));
+	EXPECT_CALL(*WhitePawns[0], toggleOrb());
 
-	EXPECT_CALL(*Pawns[1], getXPos()).WillRepeatedly(Return(3));
-	EXPECT_CALL(*Pawns[1], getYPos()).WillRepeatedly(Return(3));
-	EXPECT_CALL(*Pawns[1], toggleOrb());
+	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*WhitePawns[1], toggleOrb());
 	
-	EXPECT_EQ(B->transferOrb(Pawns[0], Pawns[1]), true);
+	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[1]), true);
 }
 
 TEST_F(boardTest, transferOrbHorizontal)
 {
-    for (auto item: Pawns)
-	{
-		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
-		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
-	}
+	setExpectPos(0, 0);
 
-	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(1));
-	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(0));
-	EXPECT_CALL(*Pawns[0], toggleOrb());
+	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(1));
+	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[0], toggleOrb());
 
-	EXPECT_CALL(*Pawns[1], getXPos()).WillRepeatedly(Return(3));
-	EXPECT_CALL(*Pawns[1], getYPos()).WillRepeatedly(Return(0));
-	EXPECT_CALL(*Pawns[1], toggleOrb());
+	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[1], toggleOrb());
 	
-	EXPECT_EQ(B->transferOrb(Pawns[0], Pawns[1]), true);
+	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[1]), true);
 }
 
 TEST_F(boardTest, transferOrbThroughPlayerHorizontal)
 {
-    for (auto item: Pawns)
-	{
-		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(6));
-		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
-	}
+	setExpectPos(6, 0);
 
-	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(0));
-	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(0));
 
-	EXPECT_CALL(*Pawns[1], getXPos()).WillRepeatedly(Return(1));
-	EXPECT_CALL(*Pawns[1], getYPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(1));
+	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(0));
 
-	EXPECT_CALL(*Pawns[2], getXPos()).WillRepeatedly(Return(3));
-	EXPECT_CALL(*Pawns[2], getYPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[2], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*WhitePawns[2], getYPos()).WillRepeatedly(Return(0));
 	
-	EXPECT_EQ(B->transferOrb(Pawns[0], Pawns[2]), false);
+	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[2]), false);
 }

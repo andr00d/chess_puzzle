@@ -10,7 +10,7 @@ class pawn
 		bool HasOrb;
 
     public:
-        pawn();
+        pawn(int X, int Y);
 		virtual ~pawn();
 
 		virtual bool setPosition(int x, int y);

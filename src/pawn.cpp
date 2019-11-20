@@ -2,10 +2,10 @@
 
 #include "pawn.h"
 
-pawn::pawn()
+pawn::pawn(int X, int Y)
 {
-	XPos = 0;
-	YPos = 0;
+	XPos = X;
+	YPos = Y;
 	HasOrb = false;
 }
 

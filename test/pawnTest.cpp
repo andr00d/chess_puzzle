@@ -13,7 +13,7 @@ struct pawnTest : testing::Test
 
 		pawnTest()
 		{
-			P = new pawn();
+			P = new pawn(0, 0);
 		}
 
 		~pawnTest()
