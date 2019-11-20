@@ -66,6 +66,12 @@ TEST_F(boardTest, movePawnNormal)
 	EXPECT_EQ(B->movePawn(WhitePawns[0], 2, 3), true);
 }
 
+TEST_F(boardTest, movePawnOnItself)
+{
+	setExpectPos(0, 0);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], 0, 0), false);
+}
+
 TEST_F(boardTest, movePawnOnPawn)
 {
 	setExpectPos(0, 0);
@@ -86,6 +92,19 @@ TEST_F(boardTest, transferOrbDiagonal)
 	EXPECT_CALL(*WhitePawns[1], toggleOrb());
 	
 	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[1]), true);
+}
+
+TEST_F(boardTest, transferOrbCrooked)
+{
+	setExpectPos(0, 0);
+
+	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(1));
+	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(2));
+
+	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(6));
+	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(3));
+	
+	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[1]), false);
 }
 
 TEST_F(boardTest, transferOrbHorizontal)

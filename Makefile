@@ -22,7 +22,7 @@ coverage:$(GAME_SOURCES) Makefile src/*.h
 showCoverage:coverage
 	@valgrind ./coverage
 	gcovr -r . -e test
-	rm -f *.gcov *.gcda *.gcno
+	rm -f *.gcov *.gcda *.gcno coverage
 
 clean:
 	@rm -rf $(TARGETS) 
