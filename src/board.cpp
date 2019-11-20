@@ -69,5 +69,26 @@ bool board::transferOrb(pawn *P1, pawn *P2)
 std::vector<std::pair<int, int>> board::GetMoves(pawn *P)
 {
     std::vector<std::pair<int, int>> result;
+    int steps[][2] = {{-1,2}, {1,2}, {2,1}, {2,-1}, {1,-2}, {-1,-2}, {-2,-1}, {-2,1}};
+
+    for (int i = 0; i < 8; i++)
+    {
+        int TestX = P->getXPos() + steps[i][0];
+        int TestY = P->getYPos() + steps[i][1];
+        int count = 0;
+
+        for (size_t i = 0; i < 5; i++)
+        {
+            if(TestX < 0 || TestY < 0 || 
+            (TestX == WhitePawns[i]->getXPos() && TestY == WhitePawns[i]->getYPos()) ||
+            (TestX == BlackPawns[i]->getXPos() && TestY == BlackPawns[i]->getYPos()))
+                count++;
+            
+        }
+
+        if(count == 0)
+            result.push_back(std::make_pair (TestX, TestY));
+    }
+    
     return result;
 }

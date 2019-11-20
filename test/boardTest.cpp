@@ -129,16 +129,20 @@ TEST_F(boardTest, GetPossibleMoves)
 	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
 	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(4));
 
-	std::vector<std::pair<int, int>> result = B->GetMoves(WhitePawns[2]);
+	std::vector<std::pair<int, int>> result = B->GetMoves(WhitePawns[0]);
 
 	EXPECT_EQ(result.size(), 6);
 
-	int expected[][2] = {{0,1}, {0,3}, {1,4}, {3,4}, {4,1}, {4,3}};
+	int expected[][2] = {{0,1}, {0,3}, {1,4}, {3,0}, {4,1}, {4,3}};
 
     for (auto const& pair: result)
 	{
-		int test[2] = {std::get<0>(pair), std::get<1>(pair)};
-		bool containsValue = std::find(std::begin(expected), std::end(expected), test) != std::end(expected);
-		EXPECT_TRUE(containsValue);
+		bool result = false;
+		for (size_t i = 0; i < 6; i++)
+		{
+			if(expected[i][0] == std::get<0>(pair) && expected[i][1] == std::get<1>(pair))
+				result = true;
+		}
+		EXPECT_TRUE(result);
 	}
 }
