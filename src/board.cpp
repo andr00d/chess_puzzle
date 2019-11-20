@@ -41,6 +41,22 @@ bool board::transferOrb(pawn *P1, pawn *P2)
         P1->getXPos() - P2->getXPos() == 
         P1->getYPos() - P2->getYPos())
     {
+        for (auto const& item: Pawns)
+        {
+            if(item == P1 || item == P2)
+                continue;
+
+            // check if a pawn is in the way
+            if(P1->getXPos() * (P2->getYPos() - item->getYPos()) + 
+               P2->getXPos() * (item->getYPos() - P1->getYPos()) + 
+               item->getXPos() * (P1->getYPos() - P2->getYPos()) == 0 &&
+               item->getYPos() >= P1->getYPos() && item->getYPos() <= P2->getYPos() &&
+               item->getXPos() >= P1->getXPos() && item->getXPos() <= P2->getXPos())
+            {
+                return false;
+            }
+        }
+
         P1->toggleOrb();
         P2->toggleOrb();
         return true;

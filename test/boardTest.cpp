@@ -64,8 +64,14 @@ TEST_F(boardTest, movePawnOnPawn)
 
 TEST_F(boardTest, transferOrbDiagonal)
 {
-	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(0));
-	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(0));
+    for (auto item: Pawns)
+	{
+		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
+		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
+	}
+
+	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(1));
+	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(1));
 	EXPECT_CALL(*Pawns[0], toggleOrb());
 
 	EXPECT_CALL(*Pawns[1], getXPos()).WillRepeatedly(Return(3));
@@ -77,7 +83,13 @@ TEST_F(boardTest, transferOrbDiagonal)
 
 TEST_F(boardTest, transferOrbHorizontal)
 {
-	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(0));
+    for (auto item: Pawns)
+	{
+		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(0));
+		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
+	}
+
+	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(1));
 	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(0));
 	EXPECT_CALL(*Pawns[0], toggleOrb());
 
@@ -88,8 +100,14 @@ TEST_F(boardTest, transferOrbHorizontal)
 	EXPECT_EQ(B->transferOrb(Pawns[0], Pawns[1]), true);
 }
 
-TEST_F(boardTest, transferOrbThroughPlayer)
+TEST_F(boardTest, transferOrbThroughPlayerHorizontal)
 {
+    for (auto item: Pawns)
+	{
+		EXPECT_CALL(*item, getXPos()).WillRepeatedly(Return(6));
+		EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(0));
+	}
+
 	EXPECT_CALL(*Pawns[0], getXPos()).WillRepeatedly(Return(0));
 	EXPECT_CALL(*Pawns[0], getYPos()).WillRepeatedly(Return(0));
 
