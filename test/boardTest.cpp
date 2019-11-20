@@ -118,3 +118,27 @@ TEST_F(boardTest, transferOrbThroughPlayerHorizontal)
 	
 	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[2]), false);
 }
+
+TEST_F(boardTest, GetPossibleMoves)
+{
+	setExpectPos(1, 0);
+
+	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(2));
+	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(2));
+
+	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(4));
+
+	std::vector<std::pair<int, int>> result = B->GetMoves(WhitePawns[2]);
+
+	EXPECT_EQ(result.size(), 6);
+
+	int expected[][2] = {{0,1}, {0,3}, {1,4}, {3,4}, {4,1}, {4,3}};
+
+    for (auto const& pair: result)
+	{
+		int test[2] = {std::get<0>(pair), std::get<1>(pair)};
+		bool containsValue = std::find(std::begin(expected), std::end(expected), test) != std::end(expected);
+		EXPECT_TRUE(containsValue);
+	}
+}

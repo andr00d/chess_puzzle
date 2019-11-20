@@ -65,3 +65,9 @@ bool board::transferOrb(pawn *P1, pawn *P2)
 
     return false;
 }
+
+std::vector<std::pair<int, int>> board::GetMoves(pawn *P)
+{
+    std::vector<std::pair<int, int>> result;
+    return result;
+}

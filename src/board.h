@@ -17,6 +17,7 @@ class board
 
 		bool transferOrb(pawn *P1, pawn *P2);
 		bool movePawn(pawn *P, int X, int Y);
+		std::vector<std::pair<int, int>> GetMoves(pawn *P);
 		int checkWin();
 		
 };
