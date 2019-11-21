@@ -8,7 +8,7 @@
 class mPawnFab : public pawnFab
 {
     public:       
-        MOCK_METHOD2(getPawn, pawn(int X, int Y));  
+        MOCK_METHOD2(createPawn, pawn(int X, int Y));  
 };
 
 #endif

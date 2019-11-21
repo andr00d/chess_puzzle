@@ -9,6 +9,6 @@ class pawnFab
 
     public:
         //more pawns to be added later.
-        pawn *getPawn(){return new pawn(0,0);}
+        pawn *createPawn(){return new pawn(0,0);}
 };
 #endif

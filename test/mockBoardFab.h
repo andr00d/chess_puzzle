@@ -8,7 +8,7 @@
 class mBoardFab : public boardFab
 {
     public:       
-        MOCK_METHOD2(transferOrb, board(std::vector<pawn*> White, std::vector<pawn*> Black));  
+        MOCK_METHOD2(Create5x5, board(std::vector<pawn*> White, std::vector<pawn*> Black));  
 };
 
 #endif
