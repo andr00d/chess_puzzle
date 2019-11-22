@@ -56,6 +56,13 @@ struct boardTest : testing::Test
 		}
 };
 
+TEST(constructTest, emptyVector)
+{
+	std::vector<pawn*> WhitePawns;
+	std::vector<pawn*> BlackPawns;
+	ASSERT_ANY_THROW(new board(WhitePawns, BlackPawns));
+}
+
 TEST_F(boardTest, movePawnNormal)
 {
 	setExpectPos(0, 0);
