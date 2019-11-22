@@ -6,6 +6,11 @@
 
 board::board(std::vector<pawn*> White, std::vector<pawn*> Black)
 {
+    if (White.size() != 5 || Black.size() != 5)
+    {
+        throw std::invalid_argument("vectors need to contain 5 pawns");
+    }
+    
 	WhitePawns = White;
     BlackPawns = Black;
 
