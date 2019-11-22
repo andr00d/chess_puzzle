@@ -61,3 +61,8 @@ TEST(constructTest, FabsCalled)
 	delete PF;
 	delete tstPawn;
 }
+
+TEST(gameTest, FabsCalled)
+{
+
+}
