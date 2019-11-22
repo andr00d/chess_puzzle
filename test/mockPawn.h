@@ -2,12 +2,12 @@
 #define MPAWN_H
 
 #include <gmock/gmock.h>
-#include "../src/pawn.h"
+#include "../src/iPawn.h"
 
-class mPawn : public pawn
+class mPawn : public iPawn
 {
     public:
-        mPawn(int X, int Y) : pawn(X, Y) {}
+        mPawn(int X, int Y){;}
         MOCK_METHOD2(setPosition, bool(int x, int y));
 
         MOCK_METHOD0(getXPos, int());

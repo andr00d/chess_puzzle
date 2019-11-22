@@ -3,14 +3,14 @@
 
 #include <gmock/gmock.h>
 #include "../src/pawnFab.h"
-#include "../src/pawn.h"
+#include "../src/iPawn.h"
 
 class mPawnFab : public pawnFab
 {
     public:     
         ~mPawnFab(){;}
 
-        MOCK_METHOD2(createPawn, pawn*(int X, int Y));  
+        MOCK_METHOD2(createPawn, iPawn*(int X, int Y));  
 };
 
 #endif

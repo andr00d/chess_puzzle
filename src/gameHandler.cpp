@@ -6,8 +6,8 @@
 
 gameHandler::gameHandler(boardFab *BF, pawnFab *PF)
 {
-	std::vector<pawn*> WhitePawns;
-    std::vector<pawn*> BlackPawns; 
+	std::vector<iPawn*> WhitePawns;
+    std::vector<iPawn*> BlackPawns; 
 
     for (size_t i = 0; i < 5; i++)
     {
@@ -32,3 +32,9 @@ gameHandler::~gameHandler()
 ////////////////////
 //public functions//
 ////////////////////
+
+std::vector<iPawn*> gameHandler::getMoveAblePawns()
+{
+    std::vector<iPawn*> MoveablePawns;
+    return MoveablePawns;
+}

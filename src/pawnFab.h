@@ -11,6 +11,6 @@ class pawnFab
 		virtual ~pawnFab() {;}
 
         //more pawns to be added later.
-        virtual pawn *createPawn(){return new pawn(0,0);}
+        virtual iPawn *createPawn(){return new pawn(0,0);}
 };
 #endif

@@ -2,17 +2,17 @@
 #define MBOARD_H
 
 #include <gmock/gmock.h>
-#include "../src/board.h"
-#include "../src/pawn.h"
+#include "../src/iBoard.h"
+#include "../src/iPawn.h"
 
-class mBoard : public board
+class mBoard : public iBoard
 {
     public:
-        mBoard(std::vector<pawn*> White, std::vector<pawn*> Black) : board(White, Black) {}
+        mBoard(std::vector<iPawn*> White, std::vector<iPawn*> Black){;}
        
-        MOCK_METHOD2(transferOrb, bool(pawn P1, pawn P2));
-        MOCK_METHOD3(movePawn, bool(pawn P1, int X, int Y));
-        MOCK_METHOD1(GetMoves, std::vector<std::pair<int, int>>(pawn P1));
+        MOCK_METHOD2(transferOrb, bool(iPawn *P1, iPawn *P2));
+        MOCK_METHOD3(movePawn, bool(iPawn *P1, int X, int Y));
+        MOCK_METHOD1(GetMoves, std::vector<std::pair<int, int>>(iPawn *P1));
         MOCK_METHOD0(checkWin, bool());       
 };
 

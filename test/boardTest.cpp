@@ -29,8 +29,8 @@ struct boardTest : testing::Test
 			EXPECT_CALL(*WhitePawns[2], toggleOrb());
 			EXPECT_CALL(*BlackPawns[2], toggleOrb());
 
-			std::vector<pawn*> WInput(WhitePawns.begin(), WhitePawns.end());
-			std::vector<pawn*> BInput(BlackPawns.begin(), BlackPawns.end());
+			std::vector<iPawn*> WInput(WhitePawns.begin(), WhitePawns.end());
+			std::vector<iPawn*> BInput(BlackPawns.begin(), BlackPawns.end());
 			B = new board(WInput, BInput);
 		}
 
@@ -58,8 +58,8 @@ struct boardTest : testing::Test
 
 TEST(constructTest, emptyVector)
 {
-	std::vector<pawn*> WhitePawns;
-	std::vector<pawn*> BlackPawns;
+	std::vector<iPawn*> WhitePawns;
+	std::vector<iPawn*> BlackPawns;
 	ASSERT_ANY_THROW(new board(WhitePawns, BlackPawns));
 }
 

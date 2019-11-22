@@ -4,7 +4,7 @@
 
 #include "board.h"
 
-board::board(std::vector<pawn*> White, std::vector<pawn*> Black)
+board::board(std::vector<iPawn*> White, std::vector<iPawn*> Black)
 {
     if (White.size() != 5 || Black.size() != 5)
     {
@@ -41,7 +41,7 @@ board::~board()
 //public functions//
 ////////////////////
 
-bool board::movePawn(pawn *P, int X, int Y)
+bool board::movePawn(iPawn *P, int X, int Y)
 {
     for (auto const& item: WhitePawns)
     {
@@ -52,7 +52,7 @@ bool board::movePawn(pawn *P, int X, int Y)
     return P->setPosition(X, Y);
 }
 
-bool board::transferOrb(pawn *P1, pawn *P2)
+bool board::transferOrb(iPawn *P1, iPawn *P2)
 {
     if (P1->getXPos() == P2->getXPos() || 
         P1->getYPos() == P2->getYPos() ||
@@ -83,7 +83,7 @@ bool board::transferOrb(pawn *P1, pawn *P2)
     return false;
 }
 
-std::vector<std::pair<int, int>> board::GetMoves(pawn *P)
+std::vector<std::pair<int, int>> board::GetMoves(iPawn *P)
 {
     std::vector<std::pair<int, int>> result;
     int steps[][2] = {{-1,2}, {1,2}, {2,1}, {2,-1}, {1,-2}, {-1,-2}, {-2,-1}, {-2,1}};

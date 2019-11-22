@@ -1,8 +1,9 @@
-#ifndef pawn_H
-#define pawn_H
+#ifndef PAWN_H
+#define PAWN_H
 
+#include "iPawn.h"
 
-class pawn
+class pawn : public iPawn
 {
     private:
 		int XPos;

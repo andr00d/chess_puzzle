@@ -10,13 +10,13 @@
 class gameHandler
 {
     private:
-        board *B;
+        iBoard *B;
 
     public:
         gameHandler(boardFab *BF, pawnFab *PF);
 		virtual ~gameHandler();
 		
 		gameState makeTurn(pawn *P, int X, int Y);
-        std::vector<pawn*> getMoveAblePawns();
+        std::vector<iPawn*> getMoveAblePawns();
 };
 #endif
