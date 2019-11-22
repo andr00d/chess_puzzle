@@ -8,6 +8,20 @@ board::board(std::vector<pawn*> White, std::vector<pawn*> Black)
 {
 	WhitePawns = White;
     BlackPawns = Black;
+
+    for (size_t i = 0; i < WhitePawns.size(); i++)
+    {
+        WhitePawns[i]->setPosition(i+1, 0);
+        BlackPawns[i]->setPosition(i+1, 6);
+
+        if (i == 2)
+        {
+            WhitePawns[i]->toggleOrb();
+            BlackPawns[i]->toggleOrb();
+        }
+        
+    }
+    
 }
 
 board::~board()

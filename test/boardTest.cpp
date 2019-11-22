@@ -55,16 +55,16 @@ struct boardTest : testing::Test
 TEST(constructTest, pawnsSetup)
 {
 	
-	std::vector<mPawn*> WhitePawns;
-	std::vector<mPawn*> BlackPawns;
+	std::vector<pawn*> WhitePawns;
+	std::vector<pawn*> BlackPawns;
 
 	for (int i = 0; i < 5; i++)
 	{
 		mPawn *black = new mPawn(0, 0);
 		mPawn *white = new mPawn(0, 0);
 
-		EXPECT_CALL(*black, setPosition(i+1, 0)).WillOnce(Return(true));
-		EXPECT_CALL(*white, setPosition(i+1, 6)).WillOnce(Return(true));
+		EXPECT_CALL(*white, setPosition(i+1, 0)).WillOnce(Return(true));
+		EXPECT_CALL(*black, setPosition(i+1, 6)).WillOnce(Return(true));
 
 		if(i == 2)
 		{
@@ -76,9 +76,7 @@ TEST(constructTest, pawnsSetup)
 		WhitePawns.push_back(white);
 	}
 
-	std::vector<pawn*> WInput(WhitePawns.begin(), WhitePawns.end());
-	std::vector<pawn*> BInput(BlackPawns.begin(), BlackPawns.end());
-	board *B = new board(WInput, BInput);
+	board *B = new board(WhitePawns, BlackPawns);
 	delete B;
 }
 
