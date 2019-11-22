@@ -13,15 +13,10 @@ board::board(std::vector<pawn*> White, std::vector<pawn*> Black)
     {
         WhitePawns[i]->setPosition(i+1, 0);
         BlackPawns[i]->setPosition(i+1, 6);
-
-        if (i == 2)
-        {
-            WhitePawns[i]->toggleOrb();
-            BlackPawns[i]->toggleOrb();
-        }
-        
     }
     
+    WhitePawns[2]->toggleOrb();
+    BlackPawns[2]->toggleOrb();
 }
 
 board::~board()

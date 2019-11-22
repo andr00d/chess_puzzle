@@ -16,11 +16,18 @@ struct gameTest : testing::Test
 {
 	protected:
 		gameHandler *G;
+		std::vector<pawn*> tstWhite;
+		std::vector<pawn*> tstBlack;
 		mBoardFab *BF = new mBoardFab();
 		mPawnFab *PF = new mPawnFab();
 
 		gameTest()
 		{
+			EXPECT_CALL(*PF, createPawn(_, _)).WillRepeatedly(Return(new mPawn(0,0)));
+			EXPECT_CALL(*BF, create5x5(_, _)).WillOnce(DoAll(SaveArg<0>(&tstWhite), 
+											SaveArg<1>(&tstBlack), 
+											Return(new mBoard(tstWhite, tstBlack))));
+
 			G = new gameHandler(BF, PF);
 		}
 
@@ -35,29 +42,8 @@ struct gameTest : testing::Test
 		}
 };
 
-TEST(constructTest, FabsCalled)
+TEST(gameTest, plcholder)
 {
-	std::vector<pawn*> tmpWhite;
-	std::vector<pawn*> tmpBlack;
-	mPawnFab *PF  = new mPawnFab();
-	mBoardFab *BF = new mBoardFab();
-	pawn *tstPawn = new mPawn(0,0);
-	mBoard *result = new mBoard(tmpWhite, tmpBlack);
-
-	EXPECT_CALL(*PF, createPawn(_, _)).WillRepeatedly(Return(tstPawn));
-	EXPECT_CALL(*BF, create5x5(_, _)).WillOnce(DoAll(SaveArg<0>(&tmpWhite), 
-									  SaveArg<1>(&tmpBlack), Return(result)));
-
-	gameHandler *G = new gameHandler(BF, PF);
-
-	for (auto item : tmpWhite)
-		delete item;
-
-	for (auto item : tmpBlack)
-		delete item;
-
-	delete G;
-	delete BF;
-	delete PF;
-	delete tstPawn;
+	// placeholder for refactor so constructor gets executed
+	EXPECT_EQ(true, true);
 }
