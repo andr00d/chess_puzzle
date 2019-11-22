@@ -8,7 +8,9 @@ class pawnFab
     private:
 
     public:
+		virtual ~pawnFab() {;}
+
         //more pawns to be added later.
-        pawn *createPawn(){return new pawn(0,0);}
+        virtual pawn *createPawn(){return new pawn(0,0);}
 };
 #endif

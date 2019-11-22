@@ -15,10 +15,10 @@ class board
         board(std::vector<pawn*> White, std::vector<pawn*> Black);
 		virtual ~board();
 
-		bool transferOrb(pawn *P1, pawn *P2);
-		bool movePawn(pawn *P, int X, int Y);
-		std::vector<std::pair<int, int>> GetMoves(pawn *P);
-		int checkWin();
+		virtual bool transferOrb(pawn *P1, pawn *P2);
+		virtual bool movePawn(pawn *P, int X, int Y);
+		virtual std::vector<std::pair<int, int>> GetMoves(pawn *P);
+		virtual bool checkWin();
 		
 };
 #endif

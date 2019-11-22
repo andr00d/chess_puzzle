@@ -33,13 +33,6 @@ struct boardTest : testing::Test
 		{
 			delete B;
 			B = NULL;
-			for (size_t i = 0; i < BlackPawns.size(); i++)
-			{
-				delete WhitePawns[i];
-				delete BlackPawns[i];
-				WhitePawns[i] = NULL;
-				BlackPawns[i] = NULL;
-			}
 		}
 
 		void setExpectPos(int X, int Y)

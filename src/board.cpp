@@ -12,7 +12,11 @@ board::board(std::vector<pawn*> White, std::vector<pawn*> Black)
 
 board::~board()
 {
-	
+	for (auto item : WhitePawns)
+        delete item;
+       
+    for (auto item : BlackPawns)
+        delete item;
 }
 
 /////////////////////
@@ -25,7 +29,6 @@ board::~board()
 
 bool board::movePawn(pawn *P, int X, int Y)
 {
-    std::cout << WhitePawns.size() << std::endl;
     for (auto const& item: WhitePawns)
     {
         if (item->getXPos() == X && item->getYPos() == Y)
@@ -91,4 +94,9 @@ std::vector<std::pair<int, int>> board::GetMoves(pawn *P)
     }
     
     return result;
+}
+
+bool board::checkWin()
+{
+    return false;
 }

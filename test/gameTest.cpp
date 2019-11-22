@@ -36,14 +36,14 @@ struct gameTest : testing::Test
 
 TEST(constructTest, FabsCalled)
 {
-	std::vector<pawn*> plcholder;
+	std::vector<pawn*> tmpVector;
 	mPawnFab *PF  = new mPawnFab();
 	mBoardFab *BF = new mBoardFab();
 	pawn *tstPawn = new mPawn(0,0);
-	board *result = new mBoard(plcholder, plcholder);
+	board *result = new mBoard(tmpVector, tmpVector);
 
-	EXPECT_CALL(*PF, createPawn(_, _)).WillRepeatedly(Return(*tstPawn));
-	EXPECT_CALL(*BF, Create5x5(_, _)).WillOnce(Return(*result));
+	EXPECT_CALL(*PF, createPawn(_, _)).WillRepeatedly(Return(tstPawn));
+	EXPECT_CALL(*BF, create5x5(_, _)).WillOnce(Return(result));
 
 	gameHandler *G = new gameHandler(BF, PF);
 
@@ -51,5 +51,4 @@ TEST(constructTest, FabsCalled)
 	delete BF;
 	delete PF;
 	delete tstPawn;
-	delete result;
 }

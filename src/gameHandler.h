@@ -10,9 +10,10 @@
 class gameHandler
 {
     private:
+        board *B;
 
     public:
-        gameHandler(boardFab *B, pawnFab *fab);
+        gameHandler(boardFab *BF, pawnFab *PF);
 		virtual ~gameHandler();
 		
 		gameState makeTurn(pawn *P, int X, int Y);

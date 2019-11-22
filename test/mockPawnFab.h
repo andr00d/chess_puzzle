@@ -7,8 +7,10 @@
 
 class mPawnFab : public pawnFab
 {
-    public:       
-        MOCK_METHOD2(createPawn, pawn(int X, int Y));  
+    public:     
+        ~mPawnFab(){;}
+
+        MOCK_METHOD2(createPawn, pawn*(int X, int Y));  
 };
 
 #endif
