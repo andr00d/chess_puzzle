@@ -118,5 +118,11 @@ bool board::checkWin()
             return true;
     }
     
+    for (auto item : BlackPawns)
+    {
+        if(item->getYPos() == 0 && item->hasOrb())
+            return true;
+    }
+
     return false;
 }
