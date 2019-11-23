@@ -112,7 +112,41 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 
 std::string board::getString()
 {
-    return "";
+    std::string output = "\n+---+---+---+---+---+---+---+\n";
+
+    for (int Y = 0; Y < BOARD_Y; Y++)
+    {
+        output += "|";
+        for (int X = 0; X < BOARD_X; X++)
+        {
+            bool hasPawn = false;
+
+            for (size_t i = 0; i < WhitePawns.size(); i++)
+            {
+                if((WhitePawns[i]->getXPos() == X &&
+                   WhitePawns[i]->getYPos() == Y) || 
+                   (BlackPawns[i]->getXPos() == X &&
+                   BlackPawns[i]->getYPos() == Y))
+                {
+                    if(WhitePawns[i]->hasOrb() ||
+                       BlackPawns[i]->hasOrb() )
+                        output += " O |";
+                    else
+                        output += " X |";
+                    hasPawn = true;
+                    break;
+                }
+            }
+
+            if(!hasPawn)
+            {
+                output += "   |";
+            }
+        }
+        output +="\n+---+---+---+---+---+---+---+\n";
+    }
+    
+    return output;
 }
 
 
