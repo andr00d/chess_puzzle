@@ -153,7 +153,7 @@ TEST_F(boardTest, GetPossibleMoves)
 	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
 	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(4));
 
-	std::vector<std::pair<int, int>> result = B->GetMoves(WhitePawns[0]);
+	std::vector<std::pair<int, int>> result = B->getMoves(WhitePawns[0]);
 
 	EXPECT_EQ(result.size(), 6);
 

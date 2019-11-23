@@ -83,7 +83,7 @@ bool board::transferOrb(iPawn *P1, iPawn *P2)
     return false;
 }
 
-std::vector<std::pair<int, int>> board::GetMoves(iPawn *P)
+std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 {
     std::vector<std::pair<int, int>> result;
     int steps[][2] = {{-1,2}, {1,2}, {2,1}, {2,-1}, {1,-2}, {-1,-2}, {-2,-1}, {-2,1}};
@@ -107,6 +107,18 @@ std::vector<std::pair<int, int>> board::GetMoves(iPawn *P)
             result.push_back(std::make_pair (TestX, TestY));
     }
     
+    return result;
+}
+
+std::vector<iPawn*> board::getWhitePawns()
+{
+    std::vector<iPawn*> result;
+    return result;
+}
+
+std::vector<iPawn*> board::getBlackPawns()
+{   
+    std::vector<iPawn*> result;
     return result;
 }
 

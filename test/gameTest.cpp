@@ -54,7 +54,7 @@ struct gameTest : testing::Test
 TEST_F(gameTest, moveablePawnsBegin)
 {
 	std::vector<std::pair<int,int>> tstresult;
-	EXPECT_CALL(*tstBoard, GetMoves(_)).WillOnce(Return(tstresult));
+	EXPECT_CALL(*tstBoard, getMoves(_)).WillOnce(Return(tstresult));
 
 	std::vector<iPawn*> result = G->getMoveAblePawns();
 	EXPECT_EQ(result.size(), 5);

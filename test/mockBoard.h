@@ -12,7 +12,11 @@ class mBoard : public iBoard
        
         MOCK_METHOD2(transferOrb, bool(iPawn *P1, iPawn *P2));
         MOCK_METHOD3(movePawn, bool(iPawn *P1, int X, int Y));
-        MOCK_METHOD1(GetMoves, std::vector<std::pair<int, int>>(iPawn *P1));
+        MOCK_METHOD1(getMoves, std::vector<std::pair<int, int>>(iPawn *P1));
+
+        MOCK_METHOD0(getWhitePawns, std::vector<iPawn*>());
+        MOCK_METHOD0(getBlackPawns, std::vector<iPawn*>());
+
         MOCK_METHOD0(checkWin, bool());       
 };
 
