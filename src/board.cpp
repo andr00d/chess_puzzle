@@ -112,5 +112,11 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 
 bool board::checkWin()
 {
+    for (auto item : WhitePawns)
+    {
+        if(item->getYPos() == BOARD_Y-1 && item->hasOrb())
+            return true;
+    }
+    
     return false;
 }

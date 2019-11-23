@@ -174,9 +174,8 @@ TEST_F(boardTest, GetPossibleMoves)
 TEST_F(boardTest, checkWinWhite)
 {
 	setExpectPos(0, 0);
-
-	EXPECT_CALL(*WhitePawns[2], getXPos()).WillRepeatedly(Return(3));
-	EXPECT_CALL(*WhitePawns[2], getYPos()).WillRepeatedly(Return(6));
+	EXPECT_CALL(*WhitePawns[2], hasOrb()).WillOnce(Return(true));
+	EXPECT_CALL(*WhitePawns[2], getYPos()).WillOnce(Return(6));
 
 	EXPECT_EQ(B->checkWin(), true);
 }

@@ -4,7 +4,8 @@
 #include <vector>
 #include "iBoard.h"
 #include "iPawn.h"
-#define BOARD_SIZE 7
+#define BOARD_X 7
+#define BOARD_Y 7
 
 class board : public iBoard
 {
