@@ -62,3 +62,10 @@ TEST_F(gameTest, moveablePawnsBegin)
 	std::vector<iPawn*> result = G->getMoveAblePawns();
 	EXPECT_EQ(result.size(), 5);
 }
+
+
+TEST_F(gameTest, makeTurnNormal)
+{
+	EXPECT_CALL(*tstBoard, movePawn(tstWhite[0], 0, 2)).WillOnce(Return(true));
+	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 2), VALID_MOVE);
+}

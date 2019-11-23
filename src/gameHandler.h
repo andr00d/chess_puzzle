@@ -4,8 +4,8 @@
 #include "gameState.h"
 #include "boardFab.h"
 #include "pawnFab.h"
-#include "board.h"
-#include "pawn.h"
+#include "iBoard.h"
+#include "iPawn.h"
 
 class gameHandler
 {
@@ -16,7 +16,7 @@ class gameHandler
         gameHandler(boardFab *BF, pawnFab *PF);
 		virtual ~gameHandler();
 		
-		gameState makeTurn(pawn *P, int X, int Y);
+		gameState makeTurn(iPawn *P, int X, int Y);
         std::vector<iPawn*> getMoveAblePawns();
 };
 #endif

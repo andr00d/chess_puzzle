@@ -33,6 +33,12 @@ gameHandler::~gameHandler()
 //public functions//
 ////////////////////
 
+gameState gameHandler::makeTurn(iPawn *P, int X, int Y)
+{   
+    return INVALID_MOVE;
+}
+
+
 std::vector<iPawn*> gameHandler::getMoveAblePawns()
 {
     std::vector<iPawn*> MoveablePawns;
