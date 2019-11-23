@@ -12,6 +12,8 @@ class gameHandler
     private:
         iBoard *B;
 
+        bool isWhiteTurn;
+
     public:
         gameHandler(boardFab *BF, pawnFab *PF);
 		virtual ~gameHandler();

@@ -66,12 +66,14 @@ TEST_F(gameTest, moveablePawnsBegin)
 
 TEST_F(gameTest, makeTurnNormal)
 {
+	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
 	EXPECT_CALL(*tstBoard, movePawn(_, _, _)).WillOnce(Return(true));
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 2), VALID_MOVE);
 }
 
 TEST_F(gameTest, makeTurnInvalid)
 {
+	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
 	EXPECT_CALL(*tstBoard, movePawn(_, _, _)).WillOnce(Return(false));
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 0), INVALID_MOVE);
 }
@@ -79,6 +81,8 @@ TEST_F(gameTest, makeTurnInvalid)
 TEST_F(gameTest, makeTwoTurnsSameColor)
 {
 	EXPECT_CALL(*tstBoard, movePawn(tstWhite[0], _, _)).WillOnce(Return(true));
+	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 2), VALID_MOVE);
 	EXPECT_EQ(G->makeTurn(tstWhite[1], 1, 2), INVALID_MOVE);
 }

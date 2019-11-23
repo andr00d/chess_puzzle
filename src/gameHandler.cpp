@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <iostream>
+#include <algorithm>
 
 #include "gameHandler.h"
 #include "board.h"
@@ -16,6 +17,7 @@ gameHandler::gameHandler(boardFab *BF, pawnFab *PF)
     }
     
     B = BF->create5x5(WhitePawns, BlackPawns);
+    isWhiteTurn = true;
 }
 
 gameHandler::~gameHandler()
@@ -35,8 +37,17 @@ gameHandler::~gameHandler()
 
 gameState gameHandler::makeTurn(iPawn *P, int X, int Y)
 {   
+    bool isPwnWhite = std::find(B->getWhitePawns().begin(),
+                      B->getWhitePawns().end(), P) != B->getWhitePawns().end();
+
+    if(isPwnWhite != isWhiteTurn)
+        return INVALID_MOVE;
+
     if(B->movePawn(P, X, Y))
+    {
+        isWhiteTurn = !isWhiteTurn;
         return VALID_MOVE;
+    }
     
     return INVALID_MOVE;
 }
