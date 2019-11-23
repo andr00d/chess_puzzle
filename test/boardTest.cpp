@@ -179,3 +179,11 @@ TEST_F(boardTest, checkWinWhite)
 
 	EXPECT_EQ(B->checkWin(), true);
 }
+
+TEST_F(boardTest, checkWinBlack)
+{
+	setExpectPos(0, 0);
+	EXPECT_CALL(*BlackPawns[2], hasOrb()).WillOnce(Return(true));
+
+	EXPECT_EQ(B->checkWin(), true);
+}
