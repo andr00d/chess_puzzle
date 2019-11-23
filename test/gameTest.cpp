@@ -18,6 +18,7 @@ struct gameTest : testing::Test
 		gameHandler *G;
 		std::vector<iPawn*> tstWhite;
 		std::vector<iPawn*> tstBlack;
+		mBoard *tstBoard = new mBoard(tstWhite, tstBlack);
 		mBoardFab *BF = new mBoardFab();
 		mPawnFab *PF = new mPawnFab();
 		mPawn *tstPawn = new mPawn(0,0);
@@ -27,7 +28,7 @@ struct gameTest : testing::Test
 			EXPECT_CALL(*PF, createPawn(_, _)).WillRepeatedly(Return(tstPawn));
 			EXPECT_CALL(*BF, create5x5(_, _)).WillOnce(DoAll(SaveArg<0>(&tstWhite), 
 											SaveArg<1>(&tstBlack), 
-											Return(new mBoard(tstWhite, tstBlack))));
+											Return(tstBoard)));
 
 			G = new gameHandler(BF, PF);
 		}
@@ -50,9 +51,11 @@ struct gameTest : testing::Test
 		}
 };
 
-TEST_F(gameTest, moveablePawns)
+TEST_F(gameTest, moveablePawnsBegin)
 {
-	//placeholder for refactor so everything gets called
+	std::vector<std::pair<int,int>> tstresult;
+	EXPECT_CALL(*tstBoard, GetMoves(_)).WillOnce(Return(tstresult));
+
 	std::vector<iPawn*> result = G->getMoveAblePawns();
-	EXPECT_EQ(true, true);
+	EXPECT_EQ(result.size(), 5);
 }
