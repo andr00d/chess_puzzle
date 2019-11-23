@@ -81,8 +81,13 @@ TEST_F(gameTest, makeTurnInvalid)
 TEST_F(gameTest, makeTwoTurnsSameColor)
 {
 	EXPECT_CALL(*tstBoard, movePawn(tstWhite[0], _, _)).WillOnce(Return(true));
+	EXPECT_CALL(*tstBoard, movePawn(tstBlack[0], _, _)).WillOnce(Return(true));
 	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+
 
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 2), VALID_MOVE);
 	EXPECT_EQ(G->makeTurn(tstWhite[1], 1, 2), INVALID_MOVE);
+
+	EXPECT_EQ(G->makeTurn(tstBlack[0], 0, 4), VALID_MOVE);
+	EXPECT_EQ(G->makeTurn(tstBlack[1], 1, 4), INVALID_MOVE);
 }
