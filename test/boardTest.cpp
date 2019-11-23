@@ -171,6 +171,41 @@ TEST_F(boardTest, GetPossibleMoves)
 	}
 }
 
+TEST_F(boardTest, checkPrint)
+{
+	for (size_t i = 0; i < 5; i++)
+	{
+		EXPECT_CALL(*WhitePawns[i], getXPos()).WillRepeatedly(Return(i+1));
+		EXPECT_CALL(*WhitePawns[i], getYPos()).WillRepeatedly(Return(0));
+		EXPECT_CALL(*WhitePawns[i], hasOrb()).WillRepeatedly(Return(false));
+		EXPECT_CALL(*BlackPawns[i], getXPos()).WillRepeatedly(Return(i+1));
+		EXPECT_CALL(*BlackPawns[i], getYPos()).WillRepeatedly(Return(6));
+		EXPECT_CALL(*BlackPawns[i], hasOrb()).WillRepeatedly(Return(false));
+	}
+	
+	EXPECT_CALL(*WhitePawns[2], hasOrb()).WillRepeatedly(Return(true));
+	EXPECT_CALL(*BlackPawns[2], hasOrb()).WillRepeatedly(Return(true));
+
+	std::string expectedString = R"(
++---+---+---+---+---+---+---+
+|   | X | X | O | X | X |   |
++---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+
+|   | X | X | O | X | X |   |
++---+---+---+---+---+---+---+)";
+
+	EXPECT_EQ(B->getString(), expectedString);
+}
+
 TEST_F(boardTest, checkWinWhite)
 {
 	setExpectPos(0, 0);
