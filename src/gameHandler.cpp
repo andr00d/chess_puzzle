@@ -37,8 +37,8 @@ gameHandler::~gameHandler()
 
 gameState gameHandler::makeTurn(iPawn *P, int X, int Y)
 {   
-    bool isPwnWhite = std::find(B->getWhitePawns().begin(),
-                      B->getWhitePawns().end(), P) != B->getWhitePawns().end();
+    std::vector<iPawn*> pwns = B->getWhitePawns();
+    bool isPwnWhite = std::count(pwns.begin(), pwns.end(), P);
 
     if(isPwnWhite != isWhiteTurn)
         return INVALID_MOVE;
