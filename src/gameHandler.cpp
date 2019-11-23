@@ -35,6 +35,9 @@ gameHandler::~gameHandler()
 
 gameState gameHandler::makeTurn(iPawn *P, int X, int Y)
 {   
+    if(B->movePawn(P, X, Y))
+        return VALID_MOVE;
+    
     return INVALID_MOVE;
 }
 
