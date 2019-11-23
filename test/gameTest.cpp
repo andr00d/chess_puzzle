@@ -54,7 +54,10 @@ struct gameTest : testing::Test
 TEST_F(gameTest, moveablePawnsBegin)
 {
 	std::vector<std::pair<int,int>> tstresult;
-	EXPECT_CALL(*tstBoard, getMoves(_)).WillOnce(Return(tstresult));
+	tstresult.push_back(std::pair<int,int>(1,2));
+
+	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+	EXPECT_CALL(*tstBoard, getMoves(_)).WillRepeatedly(Return(tstresult));
 
 	std::vector<iPawn*> result = G->getMoveAblePawns();
 	EXPECT_EQ(result.size(), 5);

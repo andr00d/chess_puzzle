@@ -110,18 +110,6 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
     return result;
 }
 
-std::vector<iPawn*> board::getWhitePawns()
-{
-    std::vector<iPawn*> result;
-    return result;
-}
-
-std::vector<iPawn*> board::getBlackPawns()
-{   
-    std::vector<iPawn*> result;
-    return result;
-}
-
 bool board::checkWin()
 {
     return false;
