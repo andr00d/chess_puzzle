@@ -49,6 +49,8 @@ gameState gameHandler::makeTurn(iPawn *P, int X, int Y)
         {
             if(isWhiteTurn)
                 return WHITE_WON;
+            else
+                return BLACK_WON;
         }
 
         isWhiteTurn = !isWhiteTurn;
