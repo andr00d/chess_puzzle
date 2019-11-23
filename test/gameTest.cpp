@@ -104,3 +104,14 @@ TEST_F(gameTest, checkWhiteWin)
 	//board checks valid moves and win, so we can just cheat with the setup here.
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 3, 6), WHITE_WON);
 }
+
+TEST_F(gameTest, checkBlackWin)
+{
+	EXPECT_CALL(*tstBoard, movePawn(_ , _, _)).WillRepeatedly(Return(true));
+	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+	EXPECT_CALL(*tstBoard, checkWin()).WillOnce(Return(false)).WillOnce(Return(true));
+
+	//board checks valid moves and win, so we can just cheat with the setup here.
+	EXPECT_EQ(G->makeTurn(tstWhite[0], 1, 2), VALID_MOVE);
+	EXPECT_EQ(G->makeTurn(tstBlack[0], 0, 3), BLACK_WON);
+}
