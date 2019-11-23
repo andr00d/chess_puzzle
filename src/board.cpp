@@ -110,6 +110,12 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
     return result;
 }
 
+std::string board::getString()
+{
+    return "";
+}
+
+
 bool board::checkWin()
 {
     for (auto item : WhitePawns)

@@ -15,6 +15,7 @@ class iBoard
 		virtual std::vector<std::pair<int, int>> getMoves(iPawn *P) = 0;
 		virtual std::vector<iPawn*> getWhitePawns() = 0;
 		virtual std::vector<iPawn*> getBlackPawns() = 0;
+		virtual std::string getString() = 0;
 		virtual bool checkWin() = 0;
 		
 };
