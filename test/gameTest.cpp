@@ -67,6 +67,7 @@ TEST_F(gameTest, moveablePawnsBegin)
 TEST_F(gameTest, makeTurnNormal)
 {
 	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+	EXPECT_CALL(*tstBoard, checkWin()).WillRepeatedly(Return(false));
 	EXPECT_CALL(*tstBoard, movePawn(_, _, _)).WillOnce(Return(true));
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 2), VALID_MOVE);
 }
@@ -75,6 +76,7 @@ TEST_F(gameTest, makeTurnInvalid)
 {
 	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
 	EXPECT_CALL(*tstBoard, movePawn(_, _, _)).WillOnce(Return(false));
+	EXPECT_CALL(*tstBoard, checkWin()).WillRepeatedly(Return(false));
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 0), INVALID_MOVE);
 }
 
@@ -83,6 +85,7 @@ TEST_F(gameTest, makeTwoTurnsSameColor)
 	EXPECT_CALL(*tstBoard, movePawn(tstWhite[0], _, _)).WillOnce(Return(true));
 	EXPECT_CALL(*tstBoard, movePawn(tstBlack[0], _, _)).WillOnce(Return(true));
 	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+	EXPECT_CALL(*tstBoard, checkWin()).WillRepeatedly(Return(false));
 
 
 	EXPECT_EQ(G->makeTurn(tstWhite[0], 0, 2), VALID_MOVE);
@@ -96,11 +99,8 @@ TEST_F(gameTest, checkWhiteWin)
 {
 	EXPECT_CALL(*tstBoard, movePawn(_ , _, _)).WillRepeatedly(Return(true));
 	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+	EXPECT_CALL(*tstBoard, checkWin()).WillOnce(Return(true));
 
-	//board checks valid moves, so we can just cheat with the setup here.
-	EXPECT_EQ(G->makeTurn(tstWhite[0], 3, 6), VALID_MOVE);
-	EXPECT_EQ(G->makeTurn(tstBlack[0], 0, 0), VALID_MOVE);
-
-	EXPECT_EQ(G->makeTurn(tstWhite[2], 3, 6), WHITE_WON);
-
+	//board checks valid moves and win, so we can just cheat with the setup here.
+	EXPECT_EQ(G->makeTurn(tstWhite[0], 3, 6), WHITE_WON);
 }

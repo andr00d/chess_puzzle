@@ -45,13 +45,18 @@ gameState gameHandler::makeTurn(iPawn *P, int X, int Y)
 
     if(B->movePawn(P, X, Y))
     {
+        if(B->checkWin())
+        {
+            if(isWhiteTurn)
+                return WHITE_WON;
+        }
+
         isWhiteTurn = !isWhiteTurn;
         return VALID_MOVE;
     }
     
     return INVALID_MOVE;
 }
-
 
 std::vector<iPawn*> gameHandler::getMoveAblePawns()
 {
