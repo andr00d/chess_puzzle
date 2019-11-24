@@ -96,7 +96,7 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 
         for (size_t i = 0; i < 5; i++)
         {
-            if(TestX < 0 || TestY < 0 || 
+            if(TestX < 0 || TestY < 0 || TestX >= BOARD_X || TestY >= BOARD_Y ||
             (TestX == WhitePawns[i]->getXPos() && TestY == WhitePawns[i]->getYPos()) ||
             (TestX == BlackPawns[i]->getXPos() && TestY == BlackPawns[i]->getYPos()))
                 count++;
