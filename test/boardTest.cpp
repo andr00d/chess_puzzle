@@ -216,9 +216,13 @@ TEST_F(boardTest, checkPrint)
 	EXPECT_CALL(*WhitePawns[2], hasOrb()).WillRepeatedly(Return(true));
 	EXPECT_CALL(*BlackPawns[2], hasOrb()).WillRepeatedly(Return(true));
 
+	// white   = "\033[37m"
+	// black   = "\033[30m" 
+	// default = "\033[97m"
+
 	std::string expectedString = R"(
 +---+---+---+---+---+---+---+
-|   | X | X | O | X | X |   |
+|   |\033[37m X \033[97m|\033[37m X \033[97m|\033[37m O \033[97m|\033[37m X \033[97m|\033[37m X \033[97m|   |
 +---+---+---+---+---+---+---+
 |   |   |   |   |   |   |   |
 +---+---+---+---+---+---+---+
@@ -230,7 +234,7 @@ TEST_F(boardTest, checkPrint)
 +---+---+---+---+---+---+---+
 |   |   |   |   |   |   |   |
 +---+---+---+---+---+---+---+
-|   | X | X | O | X | X |   |
+|   |\033[30m X \033[97m|\033[30m X \033[97m|\033[30m O \033[97m|\033[30m X \033[97m|\033[30m X \033[97m|   |
 +---+---+---+---+---+---+---+
 )";
 
