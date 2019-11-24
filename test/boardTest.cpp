@@ -209,6 +209,44 @@ TEST_F(boardTest, GetPossibleMovesEdgeBoard)
 	}
 }
 
+TEST_F(boardTest, GetPossibleMovesOrb)
+{
+	setExpectPos(0, 0);
+
+	std::vector<std::pair<int,int>> orbMoves;
+	int steps[][2] = {{-1,0}, {1,0}, {0, 4}, {2,2}};
+			for (int i = 0; i < 4; i++)
+				orbMoves.push_back(std::make_pair(steps[i][0], steps[i][1]));
+
+	EXPECT_CALL(*BlackPawns[0], getXPos()).WillRepeatedly(Return(2));
+	EXPECT_CALL(*BlackPawns[0], getYPos()).WillRepeatedly(Return(3));
+
+	EXPECT_CALL(*BlackPawns[4], getXPos()).WillRepeatedly(Return(5));
+	EXPECT_CALL(*BlackPawns[4], getYPos()).WillRepeatedly(Return(4));
+
+	EXPECT_CALL(*WhitePawns[4], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*WhitePawns[4], getYPos()).WillRepeatedly(Return(3));
+
+	EXPECT_CALL(*BlackPawns[0], getMoves(_)).WillRepeatedly(Return(moves));
+
+	std::vector<std::pair<int, int>> result = B->getMoves(BlackPawns[2]);
+
+	EXPECT_EQ(result.size(), 3);
+
+	int expected[][2] = {{2,6}, {4,6}, {5,4}};
+
+    for (auto const& pair: result)
+	{
+		bool result = false;
+		for (size_t i = 0; i < 3; i++)
+		{
+			if(expected[i][0] == std::get<0>(pair) && expected[i][1] == std::get<1>(pair))
+				result = true;
+		}
+		EXPECT_TRUE(result);
+	}
+}
+
 TEST_F(boardTest, checkPrint)
 {
 	for (size_t i = 0; i < 5; i++)
