@@ -64,10 +64,21 @@ std::vector<iPawn*> gameHandler::getMoveAblePawns()
 {
     std::vector<iPawn*> MoveablePawns;
 
-    for (auto item : B->getWhitePawns())
+    if(isWhiteTurn)
     {
-        if(B->getMoves(item).size() > 0)
-            MoveablePawns.push_back(item);
+        for (auto item : B->getWhitePawns())
+        {
+            if(B->getMoves(item).size() > 0)
+                MoveablePawns.push_back(item);
+        }
+    }
+    else
+    {
+        for (auto item : B->getBlackPawns())
+        {
+            if(B->getMoves(item).size() > 0)
+                MoveablePawns.push_back(item);
+        }
     }
     
     return MoveablePawns;

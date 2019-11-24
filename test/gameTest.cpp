@@ -77,6 +77,7 @@ TEST_F(gameTest, moveablePawnsTwoTurns)
 	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
 	EXPECT_CALL(*tstBoard, getBlackPawns()).WillRepeatedly(Return(tstBlack));
 	EXPECT_CALL(*tstBoard, getMoves(_)).WillRepeatedly(Return(tstresult));
+	EXPECT_CALL(*tstBoard, checkWin()).WillRepeatedly(Return(false));
 	EXPECT_CALL(*tstBoard, movePawn(_, _, _)).WillOnce(Return(true));
 
 	std::vector<iPawn*> result = G->getMoveAblePawns();
