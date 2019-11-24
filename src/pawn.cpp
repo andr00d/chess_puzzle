@@ -61,7 +61,22 @@ std::vector<std::pair<int,int>> pawn::getMoves(unsigned int max)
 		
 		return moves;
 	}
-	
+
+	if(max > 0)
+	{
+		for (size_t i = 1; i <= max; i++)
+		{
+			moves.push_back(std::make_pair(i,  0));
+			moves.push_back(std::make_pair(-i, 0));
+			moves.push_back(std::make_pair(0,  i));
+			moves.push_back(std::make_pair(0, -i));
+			moves.push_back(std::make_pair(i,  i));
+			moves.push_back(std::make_pair(i, -i));
+			moves.push_back(std::make_pair(-i, i));
+			moves.push_back(std::make_pair(-i,-i));
+		}
+	}
+
 	return moves;
 }
 

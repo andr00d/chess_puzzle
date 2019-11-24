@@ -75,8 +75,9 @@ TEST_F(pawnTest, getPossibleMoves)
 TEST_F(pawnTest, getPossibleMovesOrb)
 {
 	int steps[][2] = {{1,0}, {-1,0}, {0,1}, {0,-1}, {1,1}, {1,-1}, {-1,1}, {-1,-1}};
-	std::vector<std::pair<int,int>> result = P->getMoves(2);
-	
+	P->toggleOrb();
+	std::vector<std::pair<int,int>> result = P->getMoves(1);
+
 	for (size_t i = 0; i < result.size(); i++)
 	{
 		EXPECT_EQ(std::get<0>(result[i]), steps[i][0]);
