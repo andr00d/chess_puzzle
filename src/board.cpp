@@ -1,6 +1,7 @@
-#include <stdexcept>
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include<string>  
 
 #include "board.h"
 
@@ -119,11 +120,14 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 
 std::string board::getString(iPawn *P)
 {
+    std::string output = "\n+---+---+---+---+---+---+---+\n";
+    std::vector<std::pair<int, int>> moves;
 	std::string white = "\033[37m";
 	std::string black = "\033[30m"; 
 	std::string def   = "\033[97m";
 
-    std::string output = "\n+---+---+---+---+---+---+---+\n";
+    if(P != NULL)
+        moves = getMoves(P);
 
     for (int Y = 0; Y < BOARD_Y; Y++)
     {
@@ -132,26 +136,26 @@ std::string board::getString(iPawn *P)
         {
             bool hasPawn = false;
 
+            if(std::count(moves.begin(), moves.end(), std::make_pair(X,Y)))
+            {
+                auto it = std::find(moves.begin(), moves.end(), std::make_pair(X,Y));
+                int index = std::distance(moves.begin(), it);
+                output += " " + std::to_string(index) + " |";
+                continue;
+            }
+
             for (size_t i = 0; i < WhitePawns.size(); i++)
             {
-                if(WhitePawns[i]->getXPos() == X &&
-                   WhitePawns[i]->getYPos() == Y)
+                if((WhitePawns[i]->getXPos() == X && WhitePawns[i]->getYPos() == Y) || 
+                   (BlackPawns[i]->getXPos() == X && BlackPawns[i]->getYPos() == Y))
                 {
-                    if(WhitePawns[i]->hasOrb())
-                        output += white + " O " + def +"|";
-                    else
-                        output += white + " X " + def +"|";
+                    std::string part = "";
 
-                    hasPawn = true;
-                    break;
-                }
-                else if(BlackPawns[i]->getXPos() == X &&
-                        BlackPawns[i]->getYPos() == Y)
-                {
-                    if(BlackPawns[i]->hasOrb())
-                        output += black + " O " + def +"|";
-                    else
-                        output += black + " X " + def +"|";
+                    WhitePawns[i]->getXPos() == X &&
+                    WhitePawns[i]->getYPos() == Y ? part += white : part += black;
+
+                    WhitePawns[i]->hasOrb() ? part += " O " : part += " X ";
+                    output += part + def +"|";
 
                     hasPawn = true;
                     break;
@@ -159,13 +163,13 @@ std::string board::getString(iPawn *P)
             }
 
             if(!hasPawn)
-            {
                 output += "   |";
-            }
+
         }
+        
         output +="\n+---+---+---+---+---+---+---+\n";
     }
-    
+
     return output;
 }
 
