@@ -20,5 +20,7 @@ class gameHandler
 		
 		gameState makeTurn(iPawn *P, int X, int Y);
         std::vector<iPawn*> getMoveAblePawns();
+        
+        iBoard *getBoard(){return B;}
 };
 #endif

@@ -67,8 +67,10 @@ TEST_F(boardTest, movePawnNormal)
 {
 	setExpectPos(0, 0);
 	EXPECT_CALL(*WhitePawns[0], setPosition(2, 3)).WillOnce(Return(true));
+	EXPECT_CALL(*BlackPawns[0], setPosition(2, 4)).WillOnce(Return(true));
 
 	EXPECT_EQ(B->movePawn(WhitePawns[0], 2, 3), true);
+	EXPECT_EQ(B->movePawn(BlackPawns[0], 2, 4), true);
 }
 
 TEST_F(boardTest, movePawnOnItself)

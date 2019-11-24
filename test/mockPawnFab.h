@@ -10,7 +10,7 @@ class mPawnFab : public pawnFab
     public:     
         ~mPawnFab(){;}
 
-        MOCK_METHOD2(createPawn, iPawn*(int X, int Y));  
+        MOCK_METHOD2(createPawn, iPawn*(int X, int Y));
 };
 
 #endif

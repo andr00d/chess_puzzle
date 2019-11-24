@@ -12,8 +12,8 @@ gameHandler::gameHandler(boardFab *BF, pawnFab *PF)
 
     for (size_t i = 0; i < 5; i++)
     {
-        WhitePawns.push_back(PF->createPawn());
-        BlackPawns.push_back(PF->createPawn());
+        WhitePawns.push_back(PF->createPawn(i+1, 0));
+        BlackPawns.push_back(PF->createPawn(i+1, 6));
     }
     
     B = BF->create5x5(WhitePawns, BlackPawns);

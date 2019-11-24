@@ -18,17 +18,23 @@ struct gameTest : testing::Test
 		gameHandler *G;
 		std::vector<iPawn*> tstWhite;
 		std::vector<iPawn*> tstBlack;
-		mBoard *tstBoard = new mBoard(tstWhite, tstBlack);
+		mBoard *tstBoard;
 		mBoardFab *BF = new mBoardFab();
 		mPawnFab *PF = new mPawnFab();
 		mPawn *tstPawn = new mPawn(0,0);
 
 		gameTest()
 		{
+			for (size_t i = 0; i < 5; i++)
+			{
+				tstWhite.push_back(new mPawn(i+1,0));
+				tstBlack.push_back(new mPawn(i+1,6));
+			}
+			
+			tstBoard = new mBoard(tstWhite, tstBlack);
+
 			EXPECT_CALL(*PF, createPawn(_, _)).WillRepeatedly(Return(tstPawn));
-			EXPECT_CALL(*BF, create5x5(_, _)).WillOnce(DoAll(SaveArg<0>(&tstWhite), 
-											SaveArg<1>(&tstBlack), 
-											Return(tstBoard)));
+			EXPECT_CALL(*BF, create5x5(_, _)).WillOnce(Return(tstBoard));
 
 			G = new gameHandler(BF, PF);
 		}

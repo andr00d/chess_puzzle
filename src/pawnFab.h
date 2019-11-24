@@ -10,7 +10,7 @@ class pawnFab
     public:
 		virtual ~pawnFab() {;}
 
-        //more pawns to be added later.
-        virtual iPawn *createPawn(){return new pawn(0,0);}
+    //more pawns to be added later.
+    virtual iPawn *createPawn(int X, int Y){return new pawn(X, Y);}
 };
 #endif
