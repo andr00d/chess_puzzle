@@ -82,8 +82,11 @@ TEST_F(boardTest, movePawnOnItself)
 TEST_F(boardTest, movePawnOnPawn)
 {
 	setExpectPos(0, 0);
+	EXPECT_CALL(*BlackPawns[1], getXPos()).WillRepeatedly(Return(2));
+	EXPECT_CALL(*BlackPawns[1], getYPos()).WillRepeatedly(Return(2));
 
 	EXPECT_EQ(B->movePawn(WhitePawns[0], 0, 0), false);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], 2, 2), false);
 }
 
 TEST_F(boardTest, transferOrbDiagonal)
