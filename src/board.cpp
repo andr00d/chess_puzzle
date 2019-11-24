@@ -117,7 +117,7 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
     return result;
 }
 
-std::string board::getString()
+std::string board::getString(iPawn *P)
 {
 	std::string white = "\033[37m";
 	std::string black = "\033[30m"; 

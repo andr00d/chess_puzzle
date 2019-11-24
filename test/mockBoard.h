@@ -15,6 +15,7 @@ class mBoard : public iBoard
 
         MOCK_METHOD0(getWhitePawns, std::vector<iPawn*>());
         MOCK_METHOD0(getBlackPawns, std::vector<iPawn*>());
+        MOCK_METHOD1(getString, std::string(iPawn *P));   
         MOCK_METHOD0(getString, std::string());       
         MOCK_METHOD0(checkWin, bool());       
 };

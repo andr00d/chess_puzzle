@@ -241,8 +241,52 @@ TEST_F(boardTest, checkPrint)
 	ss << "|   |" << blk << " X " << defblk << " X " << defblk;
 	ss << " O " << defblk << " X " << defblk << " X " << def << "|   |\n";
 	ss << "+---+---+---+---+---+---+---+\n";
-	
+
 	EXPECT_EQ(B->getString(), ss.str());
+}
+
+TEST_F(boardTest, checkPrintMove)
+{
+	for (size_t i = 0; i < 5; i++)
+	{
+		EXPECT_CALL(*WhitePawns[i], getXPos()).WillRepeatedly(Return(i+1));
+		EXPECT_CALL(*WhitePawns[i], getYPos()).WillRepeatedly(Return(0));
+		EXPECT_CALL(*WhitePawns[i], hasOrb()).WillRepeatedly(Return(false));
+		EXPECT_CALL(*BlackPawns[i], getXPos()).WillRepeatedly(Return(i+1));
+		EXPECT_CALL(*BlackPawns[i], getYPos()).WillRepeatedly(Return(6));
+		EXPECT_CALL(*BlackPawns[i], hasOrb()).WillRepeatedly(Return(false));
+	}
+	
+	EXPECT_CALL(*WhitePawns[2], hasOrb()).WillRepeatedly(Return(true));
+	EXPECT_CALL(*BlackPawns[2], hasOrb()).WillRepeatedly(Return(true));
+
+	std::string wht   = "\033[37m";
+	std::string blk   = "\033[30m"; 
+	std::string def   = "\033[97m";
+	std::string defblk= "\033[97m|\033[30m";
+	std::string defwht= "\033[97m|\033[37m";
+
+	std::stringstream ss;
+
+	ss << "\n+---+---+---+---+---+---+---+\n";
+	ss << "|   |" << wht << " X " << defwht << " X " << defwht;
+	ss << " O " << defwht << " X " << defwht << " X " << def << "|   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   | 1 |   | 2 |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "| 0 |   |   |   | 3 |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |" << blk << " X " << defblk << " X " << defblk;
+	ss << " O " << defblk << " X " << defblk << " X " << def << "|   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	
+	EXPECT_EQ(B->getString(BlackPawns[1]), ss.str());
 }
 
 TEST_F(boardTest, checkWinWhite)
