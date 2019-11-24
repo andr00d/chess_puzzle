@@ -12,6 +12,7 @@ class mPawn : public iPawn
 
         MOCK_METHOD0(getXPos, int());
         MOCK_METHOD0(getYPos, int());
+        MOCK_METHOD1(getMoves, std::vector<std::pair<int,int>>(unsigned int max));
 
         MOCK_METHOD0(hasOrb, bool());
         MOCK_METHOD0(toggleOrb, void());

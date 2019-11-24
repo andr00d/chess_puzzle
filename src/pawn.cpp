@@ -48,6 +48,23 @@ bool pawn::setPosition(int x, int y)
 	return true;
 }
 
+
+std::vector<std::pair<int,int>> pawn::getMoves(unsigned int max)
+{
+	std::vector<std::pair<int,int>> moves;
+
+	if(!HasOrb)
+	{
+		int steps[][2] = {{-1,2}, {1,2}, {2,1}, {2,-1}, {1,-2}, {-1,-2}, {-2,-1}, {-2,1}};
+		for (int i = 0; i < 8; i++)
+			moves.push_back(std::make_pair(steps[i][0], steps[i][1]));
+		
+		return moves;
+	}
+	
+	return moves;
+}
+
 void pawn::toggleOrb()
 {
 	HasOrb = !HasOrb;

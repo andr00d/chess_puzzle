@@ -94,12 +94,12 @@ bool board::movePawn(iPawn *P, int X, int Y)
 std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 {
     std::vector<std::pair<int, int>> result;
-    int steps[][2] = {{-1,2}, {1,2}, {2,1}, {2,-1}, {1,-2}, {-1,-2}, {-2,-1}, {-2,1}};
+    std::vector<std::pair<int,int>> moves = P->getMoves(BOARD_X);
 
-    for (int i = 0; i < 8; i++)
+    for (size_t i = 0; i < moves.size(); i++)
     {
-        int TestX = P->getXPos() + steps[i][0];
-        int TestY = P->getYPos() + steps[i][1];
+        int TestX = P->getXPos() + std::get<0>(moves[i]);
+        int TestY = P->getYPos() + std::get<1>(moves[i]);
         int count = 0;
 
         for (size_t i = 0; i < 5; i++)
