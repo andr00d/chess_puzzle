@@ -69,6 +69,23 @@ TEST_F(gameTest, moveablePawnsBegin)
 	EXPECT_EQ(result.size(), 5);
 }
 
+TEST_F(gameTest, moveablePawnsTwoTurns)
+{
+	std::vector<std::pair<int,int>> tstresult;
+	tstresult.push_back(std::pair<int,int>(1,2));
+
+	EXPECT_CALL(*tstBoard, getWhitePawns()).WillRepeatedly(Return(tstWhite));
+	EXPECT_CALL(*tstBoard, getBlackPawns()).WillRepeatedly(Return(tstBlack));
+	EXPECT_CALL(*tstBoard, getMoves(_)).WillRepeatedly(Return(tstresult));
+	EXPECT_CALL(*tstBoard, movePawn(_, _, _)).WillOnce(Return(true));
+
+	std::vector<iPawn*> result = G->getMoveAblePawns();
+	EXPECT_EQ(tstWhite, result);
+	G->makeTurn(tstWhite[0], 1, 2);
+	result = G->getMoveAblePawns();
+	EXPECT_EQ(tstBlack, result);
+}
+
 
 TEST_F(gameTest, makeTurnNormal)
 {
