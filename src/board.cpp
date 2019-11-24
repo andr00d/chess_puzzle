@@ -119,6 +119,10 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 
 std::string board::getString()
 {
+	std::string white = "\033[37m";
+	std::string black = "\033[30m"; 
+	std::string def   = "\033[97m";
+
     std::string output = "\n+---+---+---+---+---+---+---+\n";
 
     for (int Y = 0; Y < BOARD_Y; Y++)
@@ -130,16 +134,25 @@ std::string board::getString()
 
             for (size_t i = 0; i < WhitePawns.size(); i++)
             {
-                if((WhitePawns[i]->getXPos() == X &&
-                   WhitePawns[i]->getYPos() == Y) || 
-                   (BlackPawns[i]->getXPos() == X &&
-                   BlackPawns[i]->getYPos() == Y))
+                if(WhitePawns[i]->getXPos() == X &&
+                   WhitePawns[i]->getYPos() == Y)
                 {
-                    if(WhitePawns[i]->hasOrb() ||
-                       BlackPawns[i]->hasOrb() )
-                        output += " O |";
+                    if(WhitePawns[i]->hasOrb())
+                        output += white + " O " + def +"|";
                     else
-                        output += " X |";
+                        output += white + " X " + def +"|";
+
+                    hasPawn = true;
+                    break;
+                }
+                else if(BlackPawns[i]->getXPos() == X &&
+                        BlackPawns[i]->getYPos() == Y)
+                {
+                    if(BlackPawns[i]->hasOrb())
+                        output += black + " O " + def +"|";
+                    else
+                        output += black + " X " + def +"|";
+
                     hasPawn = true;
                     break;
                 }

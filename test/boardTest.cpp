@@ -216,29 +216,33 @@ TEST_F(boardTest, checkPrint)
 	EXPECT_CALL(*WhitePawns[2], hasOrb()).WillRepeatedly(Return(true));
 	EXPECT_CALL(*BlackPawns[2], hasOrb()).WillRepeatedly(Return(true));
 
-	// white   = "\033[37m"
-	// black   = "\033[30m" 
-	// default = "\033[97m"
+	std::string wht   = "\033[37m";
+	std::string blk   = "\033[30m"; 
+	std::string def   = "\033[97m";
+	std::string defblk= "\033[97m|\033[30m";
+	std::string defwht= "\033[97m|\033[37m";
 
-	std::string expectedString = R"(
-+---+---+---+---+---+---+---+
-|   |\033[37m X \033[97m|\033[37m X \033[97m|\033[37m O \033[97m|\033[37m X \033[97m|\033[37m X \033[97m|   |
-+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+
-|   |\033[30m X \033[97m|\033[30m X \033[97m|\033[30m O \033[97m|\033[30m X \033[97m|\033[30m X \033[97m|   |
-+---+---+---+---+---+---+---+
-)";
+	std::stringstream ss;
 
-	EXPECT_EQ(B->getString(), expectedString);
+	ss << "\n+---+---+---+---+---+---+---+\n";
+	ss << "|   |" << wht << " X " << defwht << " X " << defwht;
+	ss << " O " << defwht << " X " << defwht << " X " << def << "|   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |   |   |   |   |   |   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	ss << "|   |" << blk << " X " << defblk << " X " << defblk;
+	ss << " O " << defblk << " X " << defblk << " X " << def << "|   |\n";
+	ss << "+---+---+---+---+---+---+---+\n";
+	
+	EXPECT_EQ(B->getString(), ss.str());
 }
 
 TEST_F(boardTest, checkWinWhite)
