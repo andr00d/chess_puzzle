@@ -48,7 +48,13 @@ bool board::movePawn(iPawn *P, int X, int Y)
         if (item->getXPos() == X && item->getYPos() == Y)
             return false;
     }
-    
+
+    for (auto const& item: BlackPawns)
+    {
+        if (item->getXPos() == X && item->getYPos() == Y)
+            return false;
+    }
+
     return P->setPosition(X, Y);
 }
 
