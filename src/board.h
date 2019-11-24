@@ -10,6 +10,7 @@
 class board : public iBoard
 {
     private:
+		virtual bool transferOrb(iPawn *P1, iPawn *P2);
 		std::vector<iPawn*> WhitePawns;
 		std::vector<iPawn*> BlackPawns;
 
@@ -17,7 +18,6 @@ class board : public iBoard
         board(std::vector<iPawn*> White, std::vector<iPawn*> Black);
 		virtual ~board();
 
-		virtual bool transferOrb(iPawn *P1, iPawn *P2);
 		virtual bool movePawn(iPawn *P, int X, int Y);
 		virtual std::vector<std::pair<int, int>> getMoves(iPawn *P);
 		virtual bool checkWin();

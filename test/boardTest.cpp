@@ -101,7 +101,7 @@ TEST_F(boardTest, transferOrbDiagonal)
 	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(3));
 	EXPECT_CALL(*WhitePawns[1], toggleOrb());
 	
-	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[1]), true);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], WhitePawns[1]->getXPos(), WhitePawns[1]->getYPos()), true);
 }
 
 TEST_F(boardTest, transferOrbCrooked)
@@ -114,7 +114,7 @@ TEST_F(boardTest, transferOrbCrooked)
 	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(6));
 	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(3));
 	
-	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[1]), false);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], WhitePawns[1]->getXPos(), WhitePawns[1]->getYPos()), false);
 }
 
 TEST_F(boardTest, transferOrbHorizontal)
@@ -129,7 +129,7 @@ TEST_F(boardTest, transferOrbHorizontal)
 	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(0));
 	EXPECT_CALL(*WhitePawns[1], toggleOrb());
 	
-	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[1]), true);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], WhitePawns[1]->getXPos(), WhitePawns[1]->getYPos()), true);
 }
 
 TEST_F(boardTest, transferOrbThroughPlayerHorizontal)
@@ -145,7 +145,7 @@ TEST_F(boardTest, transferOrbThroughPlayerHorizontal)
 	EXPECT_CALL(*WhitePawns[2], getXPos()).WillRepeatedly(Return(3));
 	EXPECT_CALL(*WhitePawns[2], getYPos()).WillRepeatedly(Return(0));
 	
-	EXPECT_EQ(B->transferOrb(WhitePawns[0], WhitePawns[2]), false);
+	EXPECT_EQ(B->movePawn(WhitePawns[0], WhitePawns[2]->getXPos(), WhitePawns[2]->getYPos()), false);
 }
 
 TEST_F(boardTest, GetPossibleMoves)

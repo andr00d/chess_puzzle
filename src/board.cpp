@@ -37,27 +37,6 @@ board::~board()
 //private functions//
 /////////////////////
 
-////////////////////
-//public functions//
-////////////////////
-
-bool board::movePawn(iPawn *P, int X, int Y)
-{
-    for (auto const& item: WhitePawns)
-    {
-        if (item->getXPos() == X && item->getYPos() == Y)
-            return false;
-    }
-
-    for (auto const& item: BlackPawns)
-    {
-        if (item->getXPos() == X && item->getYPos() == Y)
-            return false;
-    }
-
-    return P->setPosition(X, Y);
-}
-
 bool board::transferOrb(iPawn *P1, iPawn *P2)
 {
     if (P1->getXPos() == P2->getXPos() || 
@@ -87,6 +66,28 @@ bool board::transferOrb(iPawn *P1, iPawn *P2)
     }
 
     return false;
+}
+
+////////////////////
+//public functions//
+////////////////////
+
+bool board::movePawn(iPawn *P, int X, int Y)
+{
+
+    for (auto const& item: WhitePawns)
+    {
+        if (item->getXPos() == X && item->getYPos() == Y)
+            return transferOrb(P, item);
+    }
+
+    for (auto const& item: BlackPawns)
+    {
+        if (item->getXPos() == X && item->getYPos() == Y)
+            return transferOrb(P, item);
+    }
+
+    return P->setPosition(X, Y);
 }
 
 std::vector<std::pair<int, int>> board::getMoves(iPawn *P)

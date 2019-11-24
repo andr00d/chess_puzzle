@@ -9,8 +9,7 @@ class mBoard : public iBoard
 {
     public:
         mBoard(std::vector<iPawn*> White, std::vector<iPawn*> Black){;}
-       
-        MOCK_METHOD2(transferOrb, bool(iPawn *P1, iPawn *P2));
+
         MOCK_METHOD3(movePawn, bool(iPawn *P1, int X, int Y));
         MOCK_METHOD1(getMoves, std::vector<std::pair<int, int>>(iPawn *P1));
 
