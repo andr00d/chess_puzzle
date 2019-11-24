@@ -173,6 +173,31 @@ TEST_F(boardTest, GetPossibleMoves)
 	}
 }
 
+TEST_F(boardTest, GetPossibleMovesEdgeBoard)
+{
+	setExpectPos(0, 0);
+
+	EXPECT_CALL(*BlackPawns[0], getXPos()).WillRepeatedly(Return(6));
+	EXPECT_CALL(*BlackPawns[0], getYPos()).WillRepeatedly(Return(6));
+
+	std::vector<std::pair<int, int>> result = B->getMoves(BlackPawns[0]);
+
+	EXPECT_EQ(result.size(), 2);
+
+	int expected[][2] = {{4, 5}, {5, 4}};
+
+    for (auto const& pair: result)
+	{
+		bool result = false;
+		for (size_t i = 0; i < 2; i++)
+		{
+			if(expected[i][0] == std::get<0>(pair) && expected[i][1] == std::get<1>(pair))
+				result = true;
+		}
+		EXPECT_TRUE(result);
+	}
+}
+
 TEST_F(boardTest, checkPrint)
 {
 	for (size_t i = 0; i < 5; i++)
