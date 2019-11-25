@@ -21,8 +21,6 @@ struct boardTest : testing::Test
 			{
 				mPawn *black = new mPawn(0, 0);
 				mPawn *white = new mPawn(0, 0);
-				EXPECT_CALL(*white, setPosition(i+1, 0)).WillOnce(Return(true));
-				EXPECT_CALL(*black, setPosition(i+1, 6)).WillOnce(Return(true));
 				BlackPawns.push_back(black);
 				WhitePawns.push_back(white);
 			}
@@ -59,6 +57,41 @@ struct boardTest : testing::Test
 				EXPECT_CALL(*item, getYPos()).WillRepeatedly(Return(Y));
 			}
 		}
+		
+		void setExpectOrb(bool expectation)
+		{
+			for (auto item: WhitePawns)
+				EXPECT_CALL(*item, hasOrb()).WillRepeatedly(Return(expectation));
+
+			for (auto item: BlackPawns)
+				EXPECT_CALL(*item, hasOrb()).WillRepeatedly(Return(expectation));
+		}
+
+		std::vector<std::pair<int,int>> getLinMoves(int max)
+		{
+			std::vector<std::pair<int,int>> linearMoves;
+			for (int i = 1; i <= max; i++)
+			{
+				linearMoves.push_back(std::make_pair(i,  0));
+				linearMoves.push_back(std::make_pair(-i, 0));
+				linearMoves.push_back(std::make_pair(0,  i));
+				linearMoves.push_back(std::make_pair(0, -i));
+				linearMoves.push_back(std::make_pair(i,  i));
+				linearMoves.push_back(std::make_pair(i, -i));
+				linearMoves.push_back(std::make_pair(-i, i));
+				linearMoves.push_back(std::make_pair(-i,-i));
+			}
+			return linearMoves;
+		}
+
+		void setExpectSetPos()
+		{
+			for (auto item: WhitePawns)
+				EXPECT_CALL(*item, setPosition(_, _)).WillRepeatedly(Return(true));
+
+			for (auto item: BlackPawns)
+				EXPECT_CALL(*item, setPosition(_, _)).WillRepeatedly(Return(true));
+		}
 };
 
 TEST(constructTest, emptyVector)
@@ -81,12 +114,18 @@ TEST_F(boardTest, movePawnNormal)
 TEST_F(boardTest, movePawnOnItself)
 {
 	setExpectPos(0, 0);
+	setExpectOrb(false);
+	
+	EXPECT_CALL(*WhitePawns[0], getMoves(_)).WillRepeatedly(Return(moves));
 	EXPECT_EQ(B->movePawn(WhitePawns[0], 0, 0), false);
 }
 
 TEST_F(boardTest, movePawnOnPawn)
 {
 	setExpectPos(0, 0);
+	setExpectOrb(false);
+
+	EXPECT_CALL(*WhitePawns[0], getMoves(_)).WillRepeatedly(Return(moves));
 	EXPECT_CALL(*BlackPawns[1], getXPos()).WillRepeatedly(Return(2));
 	EXPECT_CALL(*BlackPawns[1], getYPos()).WillRepeatedly(Return(2));
 
@@ -97,9 +136,12 @@ TEST_F(boardTest, movePawnOnPawn)
 TEST_F(boardTest, transferOrbDiagonal)
 {
 	setExpectPos(0, 0);
+	setExpectOrb(false);
 
+	EXPECT_CALL(*WhitePawns[0], getMoves(_)).WillRepeatedly(Return(getLinMoves(3)));
 	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(1));
 	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(1));
+	EXPECT_CALL(*WhitePawns[0], hasOrb()).WillRepeatedly(Return(true));
 	EXPECT_CALL(*WhitePawns[0], toggleOrb());
 
 	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
@@ -112,6 +154,8 @@ TEST_F(boardTest, transferOrbDiagonal)
 TEST_F(boardTest, transferOrbCrooked)
 {
 	setExpectPos(0, 0);
+	setExpectOrb(false);
+	setExpectSetPos();
 
 	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(1));
 	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(2));
@@ -125,9 +169,12 @@ TEST_F(boardTest, transferOrbCrooked)
 TEST_F(boardTest, transferOrbHorizontal)
 {
 	setExpectPos(0, 0);
+	setExpectOrb(false);
 
+	EXPECT_CALL(*WhitePawns[0], getMoves(_)).WillRepeatedly(Return(getLinMoves(3)));
 	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(1));
 	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[0], hasOrb()).WillRepeatedly(Return(true));
 	EXPECT_CALL(*WhitePawns[0], toggleOrb());
 
 	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
@@ -140,9 +187,12 @@ TEST_F(boardTest, transferOrbHorizontal)
 TEST_F(boardTest, transferOrbThroughPlayerHorizontal)
 {
 	setExpectPos(6, 0);
+	setExpectOrb(false);
 
+	EXPECT_CALL(*WhitePawns[0], getMoves(_)).WillRepeatedly(Return(getLinMoves(3)));
 	EXPECT_CALL(*WhitePawns[0], getXPos()).WillRepeatedly(Return(0));
 	EXPECT_CALL(*WhitePawns[0], getYPos()).WillRepeatedly(Return(0));
+	EXPECT_CALL(*WhitePawns[0], hasOrb()).WillRepeatedly(Return(true));
 
 	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(1));
 	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(0));
@@ -163,6 +213,7 @@ TEST_F(boardTest, GetPossibleMoves)
 	EXPECT_CALL(*WhitePawns[1], getXPos()).WillRepeatedly(Return(3));
 	EXPECT_CALL(*WhitePawns[1], getYPos()).WillRepeatedly(Return(4));
 	
+	EXPECT_CALL(*WhitePawns[0], hasOrb()).WillRepeatedly(Return(false));
 	EXPECT_CALL(*WhitePawns[0], getMoves(_)).WillRepeatedly(Return(moves));
 	
 	std::vector<std::pair<int, int>> result = B->getMoves(WhitePawns[0]);
@@ -191,6 +242,7 @@ TEST_F(boardTest, GetPossibleMovesEdgeBoard)
 	EXPECT_CALL(*BlackPawns[0], getYPos()).WillRepeatedly(Return(6));
 	EXPECT_CALL(*BlackPawns[0], getMoves(_)).WillRepeatedly(Return(moves));
 
+	EXPECT_CALL(*BlackPawns[0], hasOrb()).WillRepeatedly(Return(false));
 	std::vector<std::pair<int, int>> result = B->getMoves(BlackPawns[0]);
 
 	EXPECT_EQ(result.size(), 2);
@@ -212,14 +264,11 @@ TEST_F(boardTest, GetPossibleMovesEdgeBoard)
 TEST_F(boardTest, GetPossibleMovesOrb)
 {
 	setExpectPos(0, 0);
+	setExpectOrb(false);
 
-	std::vector<std::pair<int,int>> orbMoves;
-	int steps[][2] = {{-1,0}, {1,0}, {0, 4}, {2,2}};
-			for (int i = 0; i < 4; i++)
-				orbMoves.push_back(std::make_pair(steps[i][0], steps[i][1]));
 
-	EXPECT_CALL(*BlackPawns[0], getXPos()).WillRepeatedly(Return(2));
-	EXPECT_CALL(*BlackPawns[0], getYPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*BlackPawns[0], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*BlackPawns[0], getYPos()).WillRepeatedly(Return(2));
 
 	EXPECT_CALL(*BlackPawns[4], getXPos()).WillRepeatedly(Return(5));
 	EXPECT_CALL(*BlackPawns[4], getYPos()).WillRepeatedly(Return(4));
@@ -227,24 +276,15 @@ TEST_F(boardTest, GetPossibleMovesOrb)
 	EXPECT_CALL(*WhitePawns[4], getXPos()).WillRepeatedly(Return(3));
 	EXPECT_CALL(*WhitePawns[4], getYPos()).WillRepeatedly(Return(3));
 
-	EXPECT_CALL(*BlackPawns[0], getMoves(_)).WillRepeatedly(Return(moves));
+	EXPECT_CALL(*BlackPawns[2], getXPos()).WillRepeatedly(Return(3));
+	EXPECT_CALL(*BlackPawns[2], getYPos()).WillRepeatedly(Return(6));
+	EXPECT_CALL(*BlackPawns[2], hasOrb()).WillRepeatedly(Return(true));
 
 	std::vector<std::pair<int, int>> result = B->getMoves(BlackPawns[2]);
 
-	EXPECT_EQ(result.size(), 3);
-
-	int expected[][2] = {{2,6}, {4,6}, {5,4}};
-
-    for (auto const& pair: result)
-	{
-		bool result = false;
-		for (size_t i = 0; i < 3; i++)
-		{
-			if(expected[i][0] == std::get<0>(pair) && expected[i][1] == std::get<1>(pair))
-				result = true;
-		}
-		EXPECT_TRUE(result);
-	}
+	EXPECT_EQ(result.size(), 1);
+	EXPECT_EQ(std::get<0>(result[0]), 5);
+	EXPECT_EQ(std::get<1>(result[0]), 4);
 }
 
 TEST_F(boardTest, checkPrint)
