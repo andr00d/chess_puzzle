@@ -12,7 +12,7 @@ class mBoardFab : public boardFab
     public:     
         ~mBoardFab(){;}
 
-        MOCK_METHOD2(create5x5, iBoard*(std::vector<iPawn*> White, std::vector<iPawn*> Black));
+        MOCK_METHOD2(create7x7, iBoard*(std::vector<iPawn*> White, std::vector<iPawn*> Black));
 };
 
 #endif

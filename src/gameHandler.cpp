@@ -16,7 +16,7 @@ gameHandler::gameHandler(boardFab *BF, pawnFab *PF)
         BlackPawns.push_back(PF->createPawn(i+1, 6));
     }
     
-    B = BF->create5x5(WhitePawns, BlackPawns);
+    B = BF->create7x7(WhitePawns, BlackPawns);
     isWhiteTurn = true;
 }
 

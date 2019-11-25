@@ -11,7 +11,7 @@ class boardFab
 		virtual ~boardFab() {;}
 
         //more boardsizes to be added later.
-        virtual iBoard *create5x5(std::vector<iPawn*> White, std::vector<iPawn*> Black)
+        virtual iBoard *create7x7(std::vector<iPawn*> White, std::vector<iPawn*> Black)
         {return new board(White, Black);}
 };
 #endif

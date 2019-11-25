@@ -7,6 +7,8 @@
 #define BOARD_X 7
 #define BOARD_Y 7
 
+#define NR_PAWNS 5
+
 class board : public iBoard
 {
     private:

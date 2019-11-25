@@ -34,7 +34,7 @@ struct gameTest : testing::Test
 			tstBoard = new mBoard(tstWhite, tstBlack);
 
 			EXPECT_CALL(*PF, createPawn(_, _)).WillRepeatedly(Return(tstPawn));
-			EXPECT_CALL(*BF, create5x5(_, _)).WillOnce(Return(tstBoard));
+			EXPECT_CALL(*BF, create7x7(_, _)).WillOnce(Return(tstBoard));
 
 			G = new gameHandler(BF, PF);
 		}

@@ -4,10 +4,12 @@
 #include<string>  
 
 #include "board.h"
+#define getX std::get<0>
+#define getY std::get<1>
 
 board::board(std::vector<iPawn*> White, std::vector<iPawn*> Black)
 {
-    if (White.size() != 5 || Black.size() != 5)
+    if (White.size() != NR_PAWNS || Black.size() != NR_PAWNS)
     {
         throw std::invalid_argument("vectors need to contain 5 pawns");
     }
@@ -63,7 +65,7 @@ bool board::canTransfer(iPawn *P1, iPawn *P2)
     }
 
     // check if pawn is in the way
-    for (size_t i = 0; i < WhitePawns.size(); i++)
+    for (size_t i = 0; i < NR_PAWNS; i++)
     {
         if(BlackPawns[i] == P1 || BlackPawns[i] == P2||
             WhitePawns[i] == P1 || WhitePawns[i] == P2)
@@ -77,14 +79,11 @@ bool board::canTransfer(iPawn *P1, iPawn *P2)
     }
 
     // check if pawns are linearly aligned
-
     std::pair<int,int> P1Loc = std::make_pair(P1->getXPos(), P1->getYPos());
     std::pair<int,int> P2Loc = std::make_pair(P2->getXPos(), P2->getYPos());
 
-    if(std::get<1>(P1Loc) == std::get<1>(P2Loc) ||
-       std::get<0>(P1Loc) == std::get<0>(P2Loc) ||
-       (abs(std::get<0>(P1Loc) - std::get<0>(P2Loc)) ==
-       abs(std::get<1>(P1Loc) - std::get<1>(P2Loc))))
+    if(getY(P1Loc) == getY(P2Loc) || getX(P1Loc) == getX(P2Loc) ||
+       (abs(getX(P1Loc) - getX(P2Loc)) == abs(getY(P1Loc) - getY(P2Loc))))
         return true;
 
     return false;
@@ -152,11 +151,11 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
     std::vector<std::pair<int,int>> moves = P->getMoves(BOARD_X);
     for (size_t i = 0; i < moves.size(); i++)
     {
-        int TestX = P->getXPos() + std::get<0>(moves[i]);
-        int TestY = P->getYPos() + std::get<1>(moves[i]);
+        int TestX = P->getXPos() + getX(moves[i]);
+        int TestY = P->getYPos() + getY(moves[i]);
         int count = 0;
 
-        for (size_t i = 0; i < 5; i++)
+        for (size_t i = 0; i < NR_PAWNS; i++)
         {
             if(TestX < 0 || TestY < 0 || TestX >= BOARD_X || TestY >= BOARD_Y ||
             (TestX == WhitePawns[i]->getXPos() && TestY == WhitePawns[i]->getYPos()) ||
@@ -198,7 +197,7 @@ std::string board::getString(iPawn *P)
                 continue;
             }
 
-            for (size_t i = 0; i < WhitePawns.size(); i++)
+            for (size_t i = 0; i < NR_PAWNS; i++)
             {
                 if((WhitePawns[i]->getXPos() == X && WhitePawns[i]->getYPos() == Y) || 
                    (BlackPawns[i]->getXPos() == X && BlackPawns[i]->getYPos() == Y))
@@ -208,7 +207,11 @@ std::string board::getString(iPawn *P)
                     WhitePawns[i]->getXPos() == X &&
                     WhitePawns[i]->getYPos() == Y ? part += white : part += black;
 
-                    WhitePawns[i]->hasOrb() ? part += " O " : part += " X ";
+                    if(part == white)
+                        WhitePawns[i]->hasOrb() ? part += " O " : part += " X "; 
+                    else
+                        BlackPawns[i]->hasOrb() ? part += " O " : part += " X ";
+                       
                     output += part + def +"|";
 
                     hasPawn = true;
