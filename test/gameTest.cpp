@@ -5,7 +5,7 @@
 #include "mockBoardFab.h"
 #include "mockPawnFab.h"
 #include "mockBoard.h"
-#include "mockPawn.h"
+#include "mockKnight.h"
 #include <iostream>
 
 using ::testing::SaveArg;
@@ -21,14 +21,14 @@ struct gameTest : testing::Test
 		mBoard *tstBoard;
 		mBoardFab *BF = new mBoardFab();
 		mPawnFab *PF = new mPawnFab();
-		mPawn *tstPawn = new mPawn(0,0);
+		mKnight *tstPawn = new mKnight(0,0);
 
 		gameTest()
 		{
 			for (size_t i = 0; i < 5; i++)
 			{
-				tstWhite.push_back(new mPawn(i+1,0));
-				tstBlack.push_back(new mPawn(i+1,6));
+				tstWhite.push_back(new mKnight(i+1,0));
+				tstBlack.push_back(new mKnight(i+1,6));
 			}
 			
 			tstBoard = new mBoard(tstWhite, tstBlack);

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../src/pawn.h"
+#include "../src/knight.h"
 #include <iostream>
 
 //
@@ -9,11 +9,11 @@
 struct pawnTest : testing::Test
 {
 	protected:
-		pawn *P;
+		knight *P;
 
 		pawnTest()
 		{
-			P = new pawn(0, 0);
+			P = new knight(0, 0);
 		}
 
 		~pawnTest()

@@ -1,3 +1,4 @@
 # chess_puzzle
 
-a quick puzzle game played in the terminal. written using TDD
+A quick chess puzzle game played in the terminal.
+For info on how to play, use the help option in the menu.

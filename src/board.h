@@ -15,6 +15,7 @@ class board : public iBoard
 		bool isInTheWay(iPawn *P1, iPawn *P2, iPawn *Ptest);
 		bool canTransfer(iPawn *P1, iPawn *P2);
 		bool transferOrb(iPawn *P1, iPawn *P2);
+		std::vector<iPawn*> GetAllPawns();
 		std::vector<iPawn*> WhitePawns;
 		std::vector<iPawn*> BlackPawns;
 

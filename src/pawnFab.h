@@ -1,7 +1,7 @@
 #ifndef PAWNFAB_H
 #define PAWNFAB_H
 
-#include "pawn.h"
+#include "knight.h"
 
 class pawnFab
 {
@@ -11,6 +11,6 @@ class pawnFab
 		virtual ~pawnFab() {;}
 
     //more pawns to be added later.
-    virtual iPawn *createPawn(int X, int Y){return new pawn(X, Y);}
+    virtual iPawn *createPawn(int X, int Y){return new knight(X, Y);}
 };
 #endif

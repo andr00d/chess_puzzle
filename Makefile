@@ -1,6 +1,9 @@
 
 CFLAGS=-Wall -ggdb  -O0 -std=c++11 -g 
-GAME_SOURCES=src/*.cpp test/*.cpp
+TEST_SOURCES:= $(filter-out src/UI.cpp, $(wildcard src/*.cpp))
+TEST_SOURCES+= $(wildcard test/*.cpp)
+
+UI_SOURCES=src/*.cpp
 
 GCC=g++
 
@@ -8,21 +11,20 @@ TEST_LIBS= -lgtest -lgtest_main -lgmock -lpthread
 
 .phony: all clean
 
-all: gameTest
+all: chessTest
 
-game: $(GAME_SOURCES) Makefile src/*.h
-	@$(GCC) $(CFLAGS) $(GAME_SOURCES) $(TEST_LIBS) -o $@
+chessTest: $(TEST_SOURCES) Makefile src/*.h
+	@$(GCC) $(CFLAGS) $(TEST_SOURCES) $(TEST_LIBS) -o $@ || exit 1
+	valgrind ./chessTest
 
-gameTest: game
-	@valgrind ./game
+UI: $(UI_SOURCES) Makefile src/*.h
+	@$(GCC) $(CFLAGS) $(UI_SOURCES) $(TEST_LIBS) -o $@
 
-coverage:$(GAME_SOURCES) Makefile src/*.h
-	@$(GCC) $(CFLAGS) -fprofile-arcs -ftest-coverage -fPIC $(GAME_SOURCES) $(TEST_LIBS) -o $@
-
-showCoverage:coverage
-	@valgrind ./coverage
+coverage:$(TEST_SOURCES) Makefile src/*.h
+	@$(GCC) $(CFLAGS) -fprofile-arcs -ftest-coverage -fPIC $(TEST_SOURCES) $(TEST_LIBS) -o $@
+	valgrind ./coverage
 	gcovr -r . -e test
 	rm -f *.gcov *.gcda *.gcno coverage
 
 clean:
-	@rm -rf $(TARGETS) 
+	@rm -rf chessTest UI

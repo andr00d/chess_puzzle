@@ -23,16 +23,25 @@ board::board(std::vector<iPawn*> White, std::vector<iPawn*> Black)
 
 board::~board()
 {
-	for (auto item : WhitePawns)
-        delete item;
-       
-    for (auto item : BlackPawns)
+	for (auto item : GetAllPawns())
         delete item;
 }
 
 /////////////////////
 //private functions//
 /////////////////////
+
+std::vector<iPawn*> board::GetAllPawns()
+{
+    std::vector<iPawn*> result;
+    for (auto item : WhitePawns)
+        result.push_back(item);
+
+    for (auto item : BlackPawns)
+        result.push_back(item);
+    
+    return result;
+}
 
 bool board::isInTheWay(iPawn *P1, iPawn *P2, iPawn *Ptest)
 {
@@ -45,6 +54,10 @@ bool board::isInTheWay(iPawn *P1, iPawn *P2, iPawn *Ptest)
         std::sort(X, X + 3);
         std::sort(Y, Y + 3);
 
+        // make sure PTest is in the middle
+        std::cout <<"testing in middle" << std::endl;
+        std::cout << Ptest->getXPos() << " - " << Ptest->getYPos() << std::endl;
+        std::cout << X[1] << " - " << Y[1] << std::endl;
         if(X[1] == Ptest->getXPos() && Y[1] == Ptest->getYPos())
             return true;
     } 
@@ -54,7 +67,7 @@ bool board::isInTheWay(iPawn *P1, iPawn *P2, iPawn *Ptest)
 
 bool board::canTransfer(iPawn *P1, iPawn *P2)
 {
-    // check if pawn is in the same team
+    // check if pawn is in the same team, or are the same
     if((std::count(BlackPawns.begin(), BlackPawns.end(), P1) &&
        std::count(WhitePawns.begin(), WhitePawns.end(), P2)) ||
        (std::count(BlackPawns.begin(), BlackPawns.end(), P2) &&
@@ -64,27 +77,23 @@ bool board::canTransfer(iPawn *P1, iPawn *P2)
        return false;
     }
 
-    // check if pawn is in the way
-    for (size_t i = 0; i < NR_PAWNS; i++)
+    // check if a pawn is in the way
+    for (auto item : GetAllPawns())
     {
-        if(BlackPawns[i] == P1 || BlackPawns[i] == P2||
-            WhitePawns[i] == P1 || WhitePawns[i] == P2)
+        if(item == P1 || item == P2)
             continue;
-        
-        if(isInTheWay(P1, P2, BlackPawns[i]))
-            return false;
-
-        if(isInTheWay(P1, P2, WhitePawns[i]))
-            return false;
+          
+        if(isInTheWay(P1, P2, item))
+            return false;  
     }
 
-    // check if pawns are linearly aligned
+    // check if P2 is in a transferable location
+    std::vector<std::pair<int,int>> passLoc = P1->getMoves(BOARD_X);
     std::pair<int,int> P1Loc = std::make_pair(P1->getXPos(), P1->getYPos());
     std::pair<int,int> P2Loc = std::make_pair(P2->getXPos(), P2->getYPos());
-
-    if(getY(P1Loc) == getY(P2Loc) || getX(P1Loc) == getX(P2Loc) ||
-       (abs(getX(P1Loc) - getX(P2Loc)) == abs(getY(P1Loc) - getY(P2Loc))))
-        return true;
+    for (auto item : passLoc)
+        if(getX(P1Loc) + getX(item) == getX(P2Loc) && getY(P1Loc) + getY(item) == getY(P2Loc))
+            return true;
 
     return false;
 }
@@ -106,18 +115,7 @@ bool board::transferOrb(iPawn *P1, iPawn *P2)
 
 bool board::movePawn(iPawn *P, int X, int Y)
 {
-    for (auto const& item: WhitePawns)
-    {
-        if (item->getXPos() == X && item->getYPos() == Y)
-        {
-            if(canTransfer(P, item))
-                return transferOrb(P, item);
-            else
-                return false;
-        }
-    }
-
-    for (auto const& item: BlackPawns)
+    for (auto const& item: GetAllPawns())
     {
         if (item->getXPos() == X && item->getYPos() == Y)
         {
@@ -137,14 +135,10 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
 
     if(P->hasOrb())
     {
-        for (auto const& item: WhitePawns)
+        for (auto const& item: GetAllPawns())
             if(canTransfer(P, item)) 
                 result.push_back(std::make_pair(item->getXPos(), item->getYPos()));
-
-        for (auto const& item: BlackPawns)
-            if(canTransfer(P, item)) 
-                result.push_back(std::make_pair(item->getXPos(), item->getYPos()));
-
+        
         return result;
     }
 
@@ -155,13 +149,11 @@ std::vector<std::pair<int, int>> board::getMoves(iPawn *P)
         int TestY = P->getYPos() + getY(moves[i]);
         int count = 0;
 
-        for (size_t i = 0; i < NR_PAWNS; i++)
+        for (auto item : GetAllPawns())
         {
             if(TestX < 0 || TestY < 0 || TestX >= BOARD_X || TestY >= BOARD_Y ||
-            (TestX == WhitePawns[i]->getXPos() && TestY == WhitePawns[i]->getYPos()) ||
-            (TestX == BlackPawns[i]->getXPos() && TestY == BlackPawns[i]->getYPos()))
+            (TestX == item->getXPos() && TestY == item->getYPos()))
                 count++;
-            
         }
 
         if(count == 0)
@@ -196,29 +188,21 @@ std::string board::getString(iPawn *P)
                 output += " " + std::to_string(index) + " |";
                 continue;
             }
-
-            for (size_t i = 0; i < NR_PAWNS; i++)
+            
+            for (auto item : GetAllPawns())
             {
-                if((WhitePawns[i]->getXPos() == X && WhitePawns[i]->getYPos() == Y) || 
-                   (BlackPawns[i]->getXPos() == X && BlackPawns[i]->getYPos() == Y))
+                if(item->getXPos() == X && item->getYPos() == Y)
                 {
                     std::string part = "";
-
-                    WhitePawns[i]->getXPos() == X &&
-                    WhitePawns[i]->getYPos() == Y ? part += white : part += black;
-
-                    if(part == white)
-                        WhitePawns[i]->hasOrb() ? part += " O " : part += " X "; 
-                    else
-                        BlackPawns[i]->hasOrb() ? part += " O " : part += " X ";
-                       
+                    std::count(WhitePawns.begin(), WhitePawns.end(), item) ? part += white : part += black;
+                    item->hasOrb() ? part += " O " : part += " X ";
                     output += part + def +"|";
 
                     hasPawn = true;
                     break;
                 }
             }
-
+        
             if(!hasPawn)
                 output += "   |";
 

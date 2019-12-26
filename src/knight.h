@@ -1,10 +1,10 @@
-#ifndef PAWN_H
-#define PAWN_H
+#ifndef PAWN_KNIGHT_H
+#define PAWN_KNIGHT_H
 
 #include <vector>
 #include "iPawn.h"
 
-class pawn : public iPawn
+class knight : public iPawn
 {
     private:
 		int XPos;
@@ -12,8 +12,8 @@ class pawn : public iPawn
 		bool HasOrb;
 
     public:
-        pawn(int X, int Y);
-		virtual ~pawn();
+        knight(int X, int Y);
+		virtual ~knight();
 
 		virtual bool setPosition(int x, int y);
 		virtual int getXPos(){return XPos;}
@@ -21,6 +21,6 @@ class pawn : public iPawn
 		virtual std::vector<std::pair<int,int>> getMoves(unsigned int max);
 		
 		virtual bool hasOrb(){return HasOrb;}
-		virtual void toggleOrb();
+		virtual void toggleOrb(){HasOrb = !HasOrb;}
 };
 #endif

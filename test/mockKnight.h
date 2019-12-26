@@ -1,13 +1,13 @@
-#ifndef MPAWN_H
-#define MPAWN_H
+#ifndef MKNIGHT_H
+#define MKNIGHT_H
 
 #include <gmock/gmock.h>
 #include "../src/iPawn.h"
 
-class mPawn : public iPawn
+class mKnight : public iPawn
 {
     public:
-        mPawn(int X, int Y){;}
+        mKnight(int X, int Y){;}
         MOCK_METHOD2(setPosition, bool(int x, int y));
 
         MOCK_METHOD0(getXPos, int());

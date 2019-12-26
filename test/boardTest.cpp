@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../src/board.h"
-#include "mockPawn.h"
+#include "mockKnight.h"
 #include <iostream>
 
 
@@ -11,16 +11,16 @@ struct boardTest : testing::Test
 {
 	protected:
 		board *B;
-		std::vector<mPawn*> WhitePawns;
-		std::vector<mPawn*> BlackPawns;
+		std::vector<mKnight*> WhitePawns;
+		std::vector<mKnight*> BlackPawns;
 		std::vector<std::pair<int,int>> moves;
 
 		boardTest()
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				mPawn *black = new mPawn(0, 0);
-				mPawn *white = new mPawn(0, 0);
+				mKnight *black = new mKnight(0, 0);
+				mKnight *white = new mKnight(0, 0);
 				BlackPawns.push_back(black);
 				WhitePawns.push_back(white);
 			}
@@ -280,6 +280,7 @@ TEST_F(boardTest, GetPossibleMovesOrb)
 	EXPECT_CALL(*BlackPawns[2], getYPos()).WillRepeatedly(Return(6));
 	EXPECT_CALL(*BlackPawns[2], hasOrb()).WillRepeatedly(Return(true));
 
+	EXPECT_CALL(*BlackPawns[2], getMoves(_)).WillRepeatedly(Return(getLinMoves(5)));
 	std::vector<std::pair<int, int>> result = B->getMoves(BlackPawns[2]);
 
 	EXPECT_EQ(result.size(), 1);

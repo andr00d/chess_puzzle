@@ -1,15 +1,18 @@
 #include <stdexcept>
+#include <algorithm>
+#include "knight.h"
 
-#include "pawn.h"
+#define getX std::get<0>
+#define getY std::get<1>
 
-pawn::pawn(int X, int Y)
+knight::knight(int X, int Y)
 {
 	XPos = X;
 	YPos = Y;
 	HasOrb = false;
 }
 
-pawn::~pawn()
+knight::~knight()
 {
 	
 }
@@ -24,20 +27,18 @@ pawn::~pawn()
 //public functions//
 ////////////////////
 
-bool pawn::setPosition(int x, int y)
+bool knight::setPosition(int x, int y)
 {
 	if( x < 0 || y < 0)
 		return false;
 
 	// All possible moves of a knight 
 	bool possible = false;
-	int TryX[] = {-2, -2, -1, 2, 1, -1, 1, 2}; 
-	int TryY[] = {1, -1, -2, 1, 2, 2, -2, -1}; 
 
-	for (int i = 0; i < 8; i++)
+	for (auto move : getMoves(0))
 	{
-		if(XPos + TryX[i] == x && YPos + TryY[i] == y)
-		   	possible = true;
+		if(getX(move) + XPos == x && getY(move) + YPos == y)
+			possible = true;
 	}
 	
 	if(!possible)
@@ -49,7 +50,7 @@ bool pawn::setPosition(int x, int y)
 }
 
 
-std::vector<std::pair<int,int>> pawn::getMoves(unsigned int max)
+std::vector<std::pair<int,int>> knight::getMoves(unsigned int max)
 {
 	std::vector<std::pair<int,int>> moves;
 
@@ -78,9 +79,4 @@ std::vector<std::pair<int,int>> pawn::getMoves(unsigned int max)
 	}
 
 	return moves;
-}
-
-void pawn::toggleOrb()
-{
-	HasOrb = !HasOrb;
 }
